@@ -1,0 +1,74 @@
+# =========================
+# Dependencies
+# =========================
+node_modules/
+
+# =========================
+# Environment Variables
+# =========================
+.env
+.env.*
+!.env.example
+frontend/.env
+
+backend/src/rag/upload/uploads/
+
+
+# =========================
+# Build Outputs
+# =========================
+dist/
+build/
+
+# =========================
+# Logs
+# =========================
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# =========================
+# Coverage Reports
+# =========================
+coverage/
+
+# =========================
+# Cache Files
+# =========================
+.cache/
+.parcel-cache/
+.vite/
+
+# =========================
+# IDE / Editor Files
+# =========================
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# =========================
+# Operating System Files
+# =========================
+.DS_Store
+Thumbs.db
+
+# =========================
+# Temporary Files
+# =========================
+tmp/
+temp/
+
+# =========================
+# Render / Deployment
+# =========================
+.render/
+
+# =========================
+# Misc
+# =========================
+*.pid
+*.seed

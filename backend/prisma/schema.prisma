@@ -1,0 +1,73 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id           Int        @id @default(autoincrement())
+  name         String     @db.VarChar(100)
+  email        String     @unique @db.VarChar(255)
+  passwordHash String
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  chats        Chat[]
+  documents    Document[]
+}
+
+model Chat {
+  id        Int        @id @default(autoincrement())
+  title     String     @db.VarChar(255)
+  userId    Int
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  user      User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  documents Document[]
+  messages  Message[]
+
+  @@index([userId])
+}
+
+model Message {
+  id        Int      @id @default(autoincrement())
+  chatId    Int
+  role      String   @db.VarChar(20)
+  content   String
+  createdAt DateTime @default(now())
+  sources   Json?
+  chat      Chat     @relation(fields: [chatId], references: [id], onDelete: Cascade)
+
+  @@index([chatId])
+}
+
+model Document {
+  id               Int      @id @default(autoincrement())
+  originalFileName String   @db.VarChar(255)
+  mimeType         String   @db.VarChar(100)
+  fileSize         Int
+  uploadedAt       DateTime @default(now())
+  userId           Int
+  chatId           Int
+  chunks           Chunk[]
+  chat             Chat     @relation(fields: [chatId], references: [id], onDelete: Cascade)
+  user             User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([chatId])
+}
+
+model Chunk {
+  id         Int                    @id @default(autoincrement())
+  documentId Int
+  chunkIndex Int
+  text       String
+  createdAt  DateTime               @default(now())
+  embedding  Unsupported("vector")?
+  document   Document               @relation(fields: [documentId], references: [id], onDelete: Cascade)
+
+  @@unique([documentId, chunkIndex])
+  @@index([documentId])
+}
