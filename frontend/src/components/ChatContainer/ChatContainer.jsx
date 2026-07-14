@@ -31,7 +31,7 @@ const ChatContainer = ({messages,selectedPairIndex,sources}) => {
     >
       {message.role === "assistant" && (
         <img
-          src={assets.gemini_icon}
+          src={assets.ai_icon}
           alt=""
           className="avatar"
         />
