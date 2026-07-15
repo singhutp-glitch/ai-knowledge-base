@@ -3,6 +3,10 @@ import { assets } from '../../assets/assets'
 import './ChatContainer.css'
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import rehypeRaw from "rehype-raw";
+import Citation from '../Citation/Citation';
+import { preprocessCitations } from '../../utils/renderAnswer';
+
 
 const ChatContainer = ({messages,selectedPairIndex,sources}) => {
   const pairRefs = useRef([]);
@@ -20,6 +24,11 @@ const ChatContainer = ({messages,selectedPairIndex,sources}) => {
     // });
 
 }, [selectedPairIndex]);
+
+  function openCitation(id){
+    console.log('citation ',id);
+  }
+
   return (
     <div className="chat-container">
       
@@ -61,12 +70,27 @@ const ChatContainer = ({messages,selectedPairIndex,sources}) => {
   message.loading
     ? message.status
     : (
-        <ReactMarkdown
-          remarkPlugins={[remarkGfm]}
-          >
   
-          {message.content}
-        </ReactMarkdown>
+   
+<ReactMarkdown
+    rehypePlugins={[rehypeRaw]}
+    components={{
+        citation({ node }) {
+
+            const id = Number(node.properties.id);
+
+            return (
+                <Citation
+                    id={id}
+                    onClick={() => openCitation(id)}
+                />
+            );
+        }
+    }}
+>
+    {preprocessCitations(message.content)}
+</ReactMarkdown>
+
        
       )
 }
