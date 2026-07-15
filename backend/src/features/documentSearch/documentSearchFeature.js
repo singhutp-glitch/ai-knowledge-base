@@ -20,7 +20,8 @@ const  documentSearchFeature = {
         console.log('chunkResult - ',chunkResults);
          const resultText = chunkResults.map((chunk,index)=>
         `
-Result ${index+1}
+Source id: [${index+1}]
+Name: ${chunk.originalFileName}
 content: ${chunk.text}
 
     `
