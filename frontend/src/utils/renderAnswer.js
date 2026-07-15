@@ -2,7 +2,7 @@ import React from "react";
 
 export function preprocessCitations(markdown) {
     return markdown.replace(
-        /\[(\d+)\]/g,
-        (_, id) => `<citation id="${id}"></citation>`
+        /\[\s*([\d,\s]+?)\s*\]/g,
+        (_, ids) => `<citation ids="${ids}"></citation>`
     );
 }

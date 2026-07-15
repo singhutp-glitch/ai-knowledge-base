@@ -26,7 +26,7 @@ const ChatContainer = ({messages,selectedPairIndex,sources}) => {
 }, [selectedPairIndex]);
 
   function openCitation(id){
-    console.log('citation ',id);
+    console.log('citation - ',id);
   }
 
   return (
@@ -74,19 +74,21 @@ const ChatContainer = ({messages,selectedPairIndex,sources}) => {
    
 <ReactMarkdown
     rehypePlugins={[rehypeRaw]}
-    components={{
-        citation({ node }) {
+  components={{
+    citation({ node }) {
 
-            const id = Number(node.properties.id);
+        const ids = node.properties.ids
+            .split(",")
+            .map(id => Number(id.trim()));
 
-            return (
-                <Citation
-                    id={id}
-                    onClick={() => openCitation(id)}
-                />
-            );
-        }
-    }}
+        return (
+            <Citation
+                ids={ids}
+                onClick={() => openCitation(ids)}
+            />
+        );
+    }
+}}
 >
     {preprocessCitations(message.content)}
 </ReactMarkdown>

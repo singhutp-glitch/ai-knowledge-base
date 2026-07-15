@@ -1,10 +1,10 @@
 import React from 'react'
 import './Citation.css'
 
-const Citation = ({id,onClick}) => {
+const Citation = ({ids,onClick}) => {
   return (
     <button className='citation' onClick={onClick}>
-        [{id}]
+        [{ids.join(', ')}]
     </button>
   )
 }
