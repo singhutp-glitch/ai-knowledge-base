@@ -37,7 +37,6 @@ model Message {
   role      String   @db.VarChar(20)
   content   String
   createdAt DateTime @default(now())
-  sources   Json?
   chat      Chat     @relation(fields: [chatId], references: [id], onDelete: Cascade)
 
   @@index([chatId])
