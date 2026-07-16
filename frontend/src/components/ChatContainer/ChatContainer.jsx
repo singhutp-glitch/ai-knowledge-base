@@ -8,23 +8,8 @@ import Citation from '../Citation/Citation';
 import { preprocessCitations } from '../../utils/preprocessCitations.js';
 
 
-const ChatContainer = ({messages,selectedPairIndex,setSourceBar,setSourceBarSources}) => {
-  const pairRefs = useRef([]);
-  useEffect(() => {
-
-    if(
-        selectedPairIndex === null
-    ) return;
-
-    // pairRefs.current[
-    //     selectedPairIndex
-    // ]?.scrollIntoView({
-    //     behavior: "smooth",
-    //     block: "start",
-    // });
-
-}, [selectedPairIndex]);
-
+const ChatContainer = ({messages,setSourceBar,setSourceBarSources}) => {
+  
   function openCitation(ids,documentSources){
     console.log('citation - ',ids);
     const sources =[];
@@ -41,7 +26,6 @@ const ChatContainer = ({messages,selectedPairIndex,setSourceBar,setSourceBarSour
   {messages.map((message, index) => (
     <div
       key={index}
-       ref={(element)=>{pairRefs.current[index] = element;}}
       className={`message ${message.role}`}
     >
       {message.role === "assistant" && (
@@ -53,24 +37,6 @@ const ChatContainer = ({messages,selectedPairIndex,setSourceBar,setSourceBarSour
       )}
 
      <div className="message-content">
-
- {message.role === "assistant" &&
- message.sources?.length > 0 && (
-  <div className="sources-container">
-    <div>Sources:</div>
-    {message.sources.map((source) => (
-      <div key={source.url}>
-        <a
-          href={source.url}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          {source.title}
-        </a>
-      </div>
-    ))}
-  </div>
-)}
 
   {
   message.loading

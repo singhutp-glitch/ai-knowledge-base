@@ -1,12 +1,9 @@
 import React from 'react'
 import './NavBar.css';
-const NavBar = ({setGraphMode}) => {
+const NavBar = () => {
   return (
     <div className="nav">
             <p>Gemini</p>
-            <button className="graph-toggle" onClick={()=>{setGraphMode(prev => !prev)}}>
-              graph
-            </button>
     </div>
   )
 }
