@@ -1,0 +1,8 @@
+.main-source-section{
+    display: flex;
+}
+
+.source-bar{
+    width:400px ;
+    border-left: 2px solid black;
+}

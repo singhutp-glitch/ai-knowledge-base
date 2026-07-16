@@ -11,7 +11,7 @@ import Greet from './Greet.jsx'
 
 
 const Main = ({currentChatId,setCurrentChatId,loadChats,messages,setMessages
-    ,selectedPairIndex,user}) => {
+    ,selectedPairIndex,user,setSourceBar, setSourceBarSources}) => {
     const [prompt,setPrompt] = useState('');
     const [webSearch,setWebSearch] = useState(false);
     const [reasoning,setReasoning] = useState(false);
@@ -290,7 +290,8 @@ ${chunkResult.text}
     <div className='main'>
         <div className="main-container">
           {messages.length === 0? <Greet user={user}/>: <ChatContainer messages = {messages}
-          selectedPairIndex={selectedPairIndex}/>}
+          selectedPairIndex={selectedPairIndex} setSourceBar={setSourceBar}
+          setSourceBarSources={setSourceBarSources} />}
         </div> 
         <div className="bottom">
 

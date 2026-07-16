@@ -5,10 +5,10 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import rehypeRaw from "rehype-raw";
 import Citation from '../Citation/Citation';
-import { preprocessCitations } from '../../utils/renderAnswer';
+import { preprocessCitations } from '../../utils/preprocessCitations.js';
 
 
-const ChatContainer = ({messages,selectedPairIndex,sources}) => {
+const ChatContainer = ({messages,selectedPairIndex,setSourceBar,setSourceBarSources}) => {
   const pairRefs = useRef([]);
   useEffect(() => {
 
@@ -25,8 +25,14 @@ const ChatContainer = ({messages,selectedPairIndex,sources}) => {
 
 }, [selectedPairIndex]);
 
-  function openCitation(id){
-    console.log('citation - ',id);
+  function openCitation(ids,documentSources){
+    console.log('citation - ',ids);
+    const sources =[];
+    ids.forEach((id)=>{
+      documentSources[id-1].sourceId = id;
+      sources.push(documentSources[id-1])});
+    setSourceBarSources(sources)
+    setSourceBar(prev => !prev);
   }
 
   return (
@@ -84,7 +90,7 @@ const ChatContainer = ({messages,selectedPairIndex,sources}) => {
         return (
             <Citation
                 ids={ids}
-                onClick={() => openCitation(ids)}
+                onClick={() => openCitation(ids,message.documentSources)}
             />
         );
     }
