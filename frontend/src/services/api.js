@@ -26,9 +26,7 @@ export async function streamMessage(
     onStatus,
     onError
 ) {
-    console.log("web search:",webSearch);
-    console.log("reasoning:",reasoning);
-    console.log("reasoning:",documentSearch);
+    console.log("document search:",documentSearch);
     
     const token = localStorage.getItem('token');
     const response = await fetch(
@@ -42,8 +40,6 @@ export async function streamMessage(
             },
             body: JSON.stringify({
                 message: prompt,
-                webSearch,
-                reasoning,
                 documentSearch
             }),
         }

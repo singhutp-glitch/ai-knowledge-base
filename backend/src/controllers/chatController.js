@@ -11,8 +11,6 @@ const sendMessage = async (req,res) => {
     let superChatId=0
     try{
         const prompt = req.body.message;
-        const webSearch = req.body.webSearch;
-        const reasoning = req.body.reasoning;
         const documentSearch = req.body.documentSearch;
         const chatId = +req.params.chatId;
         superChatId=chatId;
@@ -43,11 +41,8 @@ const sendMessage = async (req,res) => {
             userPrompt:prompt,
             chatId:chatId,
             options:{
-                webSearch,
-                reasoning,
                 documentSearch
             },
-            searchSources:null,
             documentSources:null,
             metaData:{},
             stream:res,
@@ -57,7 +52,6 @@ const sendMessage = async (req,res) => {
 
         await buildPipelineContext(context);
 
-        superSources = context.searchSources;
         res.write(`${JSON.stringify({
                 type:'status',
                 status:"Generating..."
@@ -84,7 +78,6 @@ const sendMessage = async (req,res) => {
             chatId,
             "assistant",
             fullResponse,
-            context.searchSources,
         );
 
         res.end();
@@ -98,7 +91,6 @@ const sendMessage = async (req,res) => {
             "assistant",
             fullResponse +
             "\n\n[Response interrupted]",
-            superSources
         );
     }else{
         await saveMessages(
