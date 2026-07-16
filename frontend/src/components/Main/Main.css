@@ -113,7 +113,7 @@
 .bottom-scroll-box{
     height: 300px;
 }
-label.web-search-box , label.reasoning-box, label.document-search-box{
+label.document-search-box{
     display: inline-flex;
   align-items: center;
   gap: 8px;
@@ -131,7 +131,7 @@ label.web-search-box , label.reasoning-box, label.document-search-box{
   margin-bottom: 10px;
 }
 
-.web-search-box:hover, .reasoning-box:hover, .document-search-box:hover {
+.document-search-box:hover {
   background-color: #f5f5f5;
 }
 

@@ -19,12 +19,9 @@ export async function sendMessage(message)
 
 export async function streamMessage(
     currentChatId,
-    webSearch,
-    reasoning,
     documentSearch,
     prompt,
     onChunk,
-    onSource,
     onDocumentSource,
     onStatus,
     onError
@@ -77,10 +74,6 @@ export async function streamMessage(
             try{
                 const data = JSON.parse(line);
                 
-                if(data.type === 'sources'){
-                    console.log("sources:",data.sources);
-                    onSource(data.sources);
-                }
                 if(data.type === 'documentSources'){
                     console.log("documentSources:",data.sources);
                     onDocumentSource(data.sources);
@@ -103,10 +96,6 @@ export async function streamMessage(
             try{
                 const data = JSON.parse(buffer);
                 
-                if(data.type === 'sources'){
-                    console.log("sources:",data.sources);
-                    onSource(data.sources);
-                }
                 
                 if(data.type === 'token'){
                     onChunk(data.text);

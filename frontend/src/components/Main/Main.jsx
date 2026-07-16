@@ -13,8 +13,6 @@ import Greet from './Greet.jsx'
 const Main = ({currentChatId,setCurrentChatId,loadChats,messages,setMessages
     ,selectedPairIndex,user,setSourceBar, setSourceBarSources}) => {
     const [prompt,setPrompt] = useState('');
-    const [webSearch,setWebSearch] = useState(false);
-    const [reasoning,setReasoning] = useState(false);
     const [documentSearch,setDocumentSearch] = useState(false);
     const bottomRef = useRef(null);
     const [showMenu,setShowMenu] = useState(false);
@@ -104,8 +102,6 @@ const Main = ({currentChatId,setCurrentChatId,loadChats,messages,setMessages
 
         await streamMessage(
             chatId,
-            webSearch,
-            reasoning,
             documentSearch,
             currentPrompt,
             chunk => {
@@ -313,17 +309,7 @@ ${chunkResult.text}
                             📄 {selectedFile.name}
                         </div>
                     )}
-                {!retrievelMode && (<><label className='web-search-box'>
-                    {/* Starting feature removal from here */}
-                    Web Search
-                    <input type="checkbox" checked={webSearch} 
-                    onChange={(e) =>setWebSearch(e.target.checked)}/>
-                </label>
-                <label className='reasoning-box'>
-                    Reasoning
-                    <input type="checkbox" checked={reasoning} 
-                    onChange={(e) =>setReasoning(e.target.checked)}/>
-                </label>
+                {!retrievelMode && (<>
                  <label className='document-search-box'>
                     Document Search
                     <input type="checkbox" checked={documentSearch} 
