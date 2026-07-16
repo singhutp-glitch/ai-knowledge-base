@@ -314,6 +314,7 @@ ${chunkResult.text}
                         </div>
                     )}
                 {!retrievelMode && (<><label className='web-search-box'>
+                    {/* Starting feature removal from here */}
                     Web Search
                     <input type="checkbox" checked={webSearch} 
                     onChange={(e) =>setWebSearch(e.target.checked)}/>
