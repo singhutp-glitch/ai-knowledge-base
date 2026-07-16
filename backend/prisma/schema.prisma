@@ -38,6 +38,7 @@ model Message {
   content   String
   createdAt DateTime @default(now())
   chat      Chat     @relation(fields: [chatId], references: [id], onDelete: Cascade)
+  citations Citation[]
 
   @@index([chatId])
 }
@@ -66,7 +67,23 @@ model Chunk {
   createdAt  DateTime               @default(now())
   embedding  Unsupported("vector")?
   document   Document               @relation(fields: [documentId], references: [id], onDelete: Cascade)
+  citations Citation[]
 
   @@unique([documentId, chunkIndex])
   @@index([documentId])
+}
+
+model Citation {
+  id             Int      @id @default(autoincrement())
+
+  citationNumber Int
+
+  messageId      Int
+  message        Message  @relation(fields: [messageId], references: [id], onDelete: Cascade)
+
+  chunkId        Int
+  chunk          Chunk    @relation(fields: [chunkId], references: [id])
+
+  @@index([messageId])
+  @@unique([messageId, citationNumber])
 }
