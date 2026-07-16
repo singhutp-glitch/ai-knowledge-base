@@ -41,11 +41,14 @@ function handleCardClick(
      <div className="nav-main-section">
        <NavBar setGraphMode={setGraphMode}/>
        <div className="main-source-section">
-         {graphMode?<ChatGraph messages = {messages} handleCardClick={handleCardClick}
-         />:<Main currentChatId = {currentChatId} setCurrentChatId = {setCurrentChatId}
-         loadChats={loadChats} messages={messages} setMessages={setMessages}
-         setGraphMode = {setGraphMode} selectedPairIndex={selectedPairIndex}
-         user={user} setSourceBar={setSourceBar} setSourceBarSources={setSourceBarSources}/>}
+         <div className="main-content">
+           {graphMode?<ChatGraph messages = {messages} handleCardClick={handleCardClick}
+           />:<Main currentChatId = {currentChatId} setCurrentChatId = {setCurrentChatId}
+           loadChats={loadChats} messages={messages} setMessages={setMessages}
+           setGraphMode = {setGraphMode} selectedPairIndex={selectedPairIndex}
+           user={user} setSourceBar={setSourceBar} setSourceBarSources={setSourceBarSources}/>}
+           
+         </div>
          {sourceBar&&<div className="source-bar">
           <div className="document-sources">
             {sourceBarSources.map((source)=><div key={source.sourceId}  className="document-source">
