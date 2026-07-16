@@ -8,15 +8,36 @@ import Citation from '../Citation/Citation';
 import { preprocessCitations } from '../../utils/preprocessCitations.js';
 
 
-const ChatContainer = ({messages,setSourceBar,setSourceBarSources}) => {
+const ChatContainer = ({messages,setSourceBar,setSourceBarSources
+     ,documentSourceCache,setDocumentSourceCache
+}) => {
   
-  function openCitation(ids,documentSources){
+ async function openCitation(ids,documentSources){
     console.log('citation - ',ids);
-    const sources =[];
-    ids.forEach((id)=>{
-      documentSources[id-1].sourceId = id;
-      sources.push(documentSources[id-1])});
-    setSourceBarSources(sources)
+    const idSet = new Set(ids);
+    const sideSources =[];
+
+    const selectedSources = documentSources.filter(source =>
+      idSet.has(source.citationNumber)
+    );
+
+    for(const source of selectedSources){
+       const cache = documentSourceCache[source.chunkId]
+      if(cache){
+        sideSources.push(cache);
+      }else{
+      const chunk = await getChunk(source.chunkId);
+      sideSources.push(chunk);
+
+      setDocumentSourceCache(prev => ({
+          ...prev, 
+          [source.chunkId]: chunk,
+      }));
+      }
+    }
+
+
+    setSourceBarSources(sideSources)
     setSourceBar(prev => !prev);
   }
 

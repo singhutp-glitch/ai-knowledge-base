@@ -5,6 +5,7 @@ import chatRoutes from "./src/routes/chatRoutes.js";
 import authRoutes from './src/routes/authRoutes.js';
 import healthRoutes from './src/routes/healthRoutes.js'
 import uploadRoutes from './src/rag/routes/uploadRoutes.js'
+import documentRoutes from './src/routes/documentRoutes.js'
 
 const app = express();
 
@@ -12,6 +13,7 @@ app.use(corsMiddleware);
 app.use(express.json());
 
 app.use("/health", healthRoutes);
+app.use("/documents", documentRoutes);
 app.use("/chats", chatRoutes);
 app.use("/auth", authRoutes);
 app.use("/rag", uploadRoutes);

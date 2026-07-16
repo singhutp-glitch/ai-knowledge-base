@@ -155,3 +155,21 @@ export async function getMessages(chatId){
     const data = await response.json();
     return data;
 }
+
+
+export async function getChunk(chunkId){
+    const token = localStorage.getItem('token');
+    const response = await fetch(
+        `${API_BASE_URL}/documents/chunks/${chunkId}`,
+        {
+            method: "GET",
+            headers:{
+                "Content-Type":
+                    "application/json",
+                Authorization:`Bearer ${token}`
+            }
+        }
+    );
+    const data = await response.json();
+    return data;
+}

@@ -11,6 +11,7 @@ const ChatPage = ({user,onLogout}) => {
   const [messages,setMessages] = useState([])
   const [sourceBar,setSourceBar] = useState(false);
   const [sourceBarSources,setSourceBarSources] = useState(null);
+  const [documentSourceCache, setDocumentSourceCache] = useState({});
 
   async function loadChats(){
     const userChats = await getChats();
@@ -32,7 +33,8 @@ const ChatPage = ({user,onLogout}) => {
          <div className="main-content">
           <Main currentChatId = {currentChatId} setCurrentChatId = {setCurrentChatId}
            loadChats={loadChats} messages={messages} setMessages={setMessages}
-            user={user} setSourceBar={setSourceBar} setSourceBarSources={setSourceBarSources}/>  
+            user={user} setSourceBar={setSourceBar} setSourceBarSources={setSourceBarSources}
+            documentSourceCache={documentSourceCache} setDocumentSourceCache={setDocumentSourceCache}/>  
          </div>
          {sourceBar&&<div className="source-bar">
           <div className="document-sources">

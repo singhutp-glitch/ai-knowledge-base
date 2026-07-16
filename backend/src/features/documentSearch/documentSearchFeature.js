@@ -26,8 +26,11 @@ content: ${chunk.text}
 
     `
     ).join('\n');
-        const sources = chunkResults;
-        context.documentSources = sources;
+    
+        context.documentSources = Object.entries(chunkResults).map(([citationNumber, chunk]) => ({
+        ...chunk,
+        citationNumber: Number(citationNumber),
+    }));
         feature.name = 'documentSearch';
         feature.instruction = DOCUMENT_SEARCH_PROMPT;
         feature.resource = resultText;

@@ -11,7 +11,7 @@ import Greet from './Greet.jsx'
 
 
 const Main = ({currentChatId,setCurrentChatId,loadChats,messages,setMessages
-    ,user,setSourceBar, setSourceBarSources}) => {
+    ,user,setSourceBar, setSourceBarSources,documentSourceCache, setDocumentSourceCache}) => {
     const [prompt,setPrompt] = useState('');
     const [documentSearch,setDocumentSearch] = useState(false);
     const bottomRef = useRef(null);
@@ -75,7 +75,6 @@ const Main = ({currentChatId,setCurrentChatId,loadChats,messages,setMessages
             role: "assistant",
             content: "",
             loading: true,
-            sources:[],
             documentSources:[],
             status:'Thinking...',
         },
@@ -208,8 +207,8 @@ const Main = ({currentChatId,setCurrentChatId,loadChats,messages,setMessages
         {
             role: "assistant",
             content: "",
+            documentSources:[],
             loading: true,
-            sources:[],
             status:'Retrieving...',
         },
     ]);
@@ -286,7 +285,8 @@ ${chunkResult.text}
     <div className='main'>
         <div className="main-container">
           {messages.length === 0? <Greet user={user}/>: <ChatContainer messages = {messages}
-          setSourceBar={setSourceBar} setSourceBarSources={setSourceBarSources} />}
+          setSourceBar={setSourceBar} setSourceBarSources={setSourceBarSources}
+        documentSourceCache={documentSourceCache} setDocumentSourceCache={setDocumentSourceCache} />}
         </div> 
         <div className="bottom">
 

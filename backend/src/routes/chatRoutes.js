@@ -10,4 +10,5 @@ router.get('/:chatId/messages',authMiddleware, controller.loadMessagesGet);
 router.post('/:chatId/messages', authMiddleware,controller.sendMessage);
 
 
+
 export default router;

@@ -4,6 +4,7 @@ import { createNewChat } from "../services/databaseService.js";
 import { loadMessages } from "../services/databaseService.js";
 import { searchChatIdwithUserId } from "../services/databaseService.js";
 import { loadChats } from "../services/databaseService.js";
+import { saveCitations } from "../services/databaseService.js";
 import { buildPipelineContext } from "../pipeline/pipeline.js";
 const sendMessage = async (req,res) => {
         let superSources=[];
@@ -74,11 +75,12 @@ const sendMessage = async (req,res) => {
             })
             res.write(`${textData}\n`);
         }
-        await saveMessages(
+        const savedMessage = await saveMessages(
             chatId,
             "assistant",
             fullResponse,
         );
+        await saveCitations(context.documentSources,savedMessage.id);
 
         res.end();
                 

@@ -1,7 +1,7 @@
 import {prisma} from '../../lib/prisma.js';
 
 export async function saveMessages(chatId,role,content,sources=null){
-    await prisma.message.create({
+    return await prisma.message.create({
         data:{
             chatId,
             role,
@@ -48,7 +48,13 @@ export async function loadMessages(chatId) {
         select: {
             role: true,
             content: true,
-            sources:true,
+            citations:{
+                select:{
+                    citationNumber:true,
+                    chunkId:true
+                }
+            }
+
             },
         orderBy: {
             createdAt: "asc",
@@ -68,5 +74,37 @@ export async function loadChats(userId) {
             updatedAt: "desc",
         },
         take:5
+    });
+}
+
+export async function saveCitations(chunkResults,messageId){
+    await prisma.citation.createMany({
+    data: Object.entries(chunkResults).map(([citationNumber, chunk]) => ({
+        messageId: messageId,
+        citationNumber: Number(citationNumber),
+        chunkId: chunk.id
+    }))
+});
+   
+};
+
+
+export async function loadChunk(chunkId) {
+    return await prisma.chunk.findUnique({
+        where: {
+            id: chunkId,
+        },
+        select: {
+            id: true,
+            documentId: true,
+            chunkIndex: true,
+            text: true,
+
+            document: {
+                select: {
+                    originalFileName: true,
+                },
+            },
+        },
     });
 }
