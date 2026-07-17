@@ -3,7 +3,7 @@ import './NavBar.css';
 const NavBar = () => {
   return (
     <div className="nav">
-            <p>Gemini</p>
+            <p><div className="title">Document Intelligence</div> </p>
     </div>
   )
 }

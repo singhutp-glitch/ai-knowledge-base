@@ -332,9 +332,6 @@ ${chunkResult.text}
                         <img onClick={handleSend} src={assets.send_icon} alt="" />
                     </div>
                 </div>
-                <div className="bottom-info">
-                    Gemini may display inaccurate info, so double check its responses.
-                </div>
             </div>
         </div>
             <div className='bottom-scroll-box' ref={bottomRef}></div>
