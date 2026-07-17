@@ -27,28 +27,40 @@ const ChatPage = ({user,onLogout}) => {
     <>
      <SideBar user={user} onLogout={onLogout} chats = {chats} setMessages={setMessages}
      currentChatId = {currentChatId} setCurrentChatId = {setCurrentChatId}/>
-     <div className="nav-main-section">
-       <NavBar />
-       <div className="main-source-section">
-         <div className="main-content">
-          <Main currentChatId = {currentChatId} setCurrentChatId = {setCurrentChatId}
-           loadChats={loadChats} messages={messages} setMessages={setMessages}
-            user={user} setSourceBar={setSourceBar} setSourceBarSources={setSourceBarSources}
-            documentSourceCache={documentSourceCache} setDocumentSourceCache={setDocumentSourceCache}/>  
-         </div>
-         {sourceBar&&<div className="source-bar">
-          <div className="document-sources">
-            {sourceBarSources.map((source)=><div key={source.sourceId}  className="document-source">
-            
-                <div>source:{source.citationNumber}</div>
-                <div>document file:{source.originalFileName}</div>
-                <div>text:{source.text.slice(0,200)}</div>
+     <div className="workspace">
+  <NavBar />
+
+  <div className="workspace-content">
+    <div className="main-content">
+      <Main
+        currentChatId={currentChatId}
+        setCurrentChatId={setCurrentChatId}
+        loadChats={loadChats}
+        messages={messages}
+        setMessages={setMessages}
+        user={user}
+        setSourceBar={setSourceBar}
+        setSourceBarSources={setSourceBarSources}
+        documentSourceCache={documentSourceCache}
+        setDocumentSourceCache={setDocumentSourceCache}
+      />
+    </div>
+
+    {sourceBar && (
+      <div className="source-bar">
+        <div className="document-sources">
+          {sourceBarSources.map((source) => (
+            <div key={source.sourceId} className="document-source">
+              <div>source: {source.citationNumber}</div>
+              <div>document file: {source.originalFileName}</div>
+              <div>text: {source.text.slice(0, 200)}</div>
             </div>
-            )}
-          </div>
-          </div>}
-       </div>
-     </div>
+          ))}
+        </div>
+      </div>
+    )}
+  </div>
+</div>
            </>
   )
 }

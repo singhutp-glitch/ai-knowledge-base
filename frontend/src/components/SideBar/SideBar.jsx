@@ -17,7 +17,7 @@ const SideBar = ({user,onLogout,chats,currentChatId,setCurrentChatId,setMessages
 
 
   return (
-    <div className='side-bar'>
+  <div className={`side-bar ${extended ? "extended" : ""}`}>
       <div className='top'>
         <img onClick={()=>{setExtended(prev=>!prev)}} className="menu" src={assets.menu_icon} alt="" />
       <div onClick={handleNewChat} className='new-chat'>
