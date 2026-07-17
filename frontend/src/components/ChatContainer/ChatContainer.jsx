@@ -6,23 +6,27 @@ import remarkGfm from "remark-gfm";
 import rehypeRaw from "rehype-raw";
 import Citation from '../Citation/Citation';
 import { preprocessCitations } from '../../utils/preprocessCitations.js';
+import { getChunk } from '../../services/api.js';
 
 
 const ChatContainer = ({messages,setSourceBar,setSourceBarSources
      ,documentSourceCache,setDocumentSourceCache
 }) => {
   
- async function openCitation(ids,documentSources){
-    console.log('citation - ',ids);
+ async function openCitation(ids,citations){
+    console.log('ids - ',ids);
     const idSet = new Set(ids);
     const sideSources =[];
+    console.log('citations - ',citations);
 
-    const selectedSources = documentSources.filter(source =>
+    const selectedSources = citations.filter(source =>
       idSet.has(source.citationNumber)
     );
 
     for(const source of selectedSources){
-       const cache = documentSourceCache[source.chunkId]
+       const cache = documentSourceCache[source.chunkId];
+       console.log('source id - ',source.chunkId);
+       console.log('cache - ',cache);
       if(cache){
         sideSources.push(cache);
       }else{
@@ -77,7 +81,7 @@ const ChatContainer = ({messages,setSourceBar,setSourceBarSources
         return (
             <Citation
                 ids={ids}
-                onClick={() => openCitation(ids,message.documentSources)}
+                onClick={() => openCitation(ids,message.citations)}
             />
         );
     }

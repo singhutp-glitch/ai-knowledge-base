@@ -75,7 +75,7 @@ const Main = ({currentChatId,setCurrentChatId,loadChats,messages,setMessages
             role: "assistant",
             content: "",
             loading: true,
-            documentSources:[],
+            citations:[],
             status:'Thinking...',
         },
     ]);
@@ -128,32 +128,35 @@ const Main = ({currentChatId,setCurrentChatId,loadChats,messages,setMessages
                     return updated;
                 });
             },
-            sources => {
-                setMessages(prev => {
-
-                    const updated = [...prev];
-
-                    updated[updated.length - 1] = {
-                        ...updated[updated.length - 1],
-                        sources,
-                        loading:false
-                    };
-
-                    return updated;
-                });
-            
-            },
             documentSources => {
+                const newChunks = Object.values(documentSources).reduce((acc, chunk) => {
+                        acc[chunk.id] = chunk;
+                        return acc;
+                    }, {});
+                    console.log("newChunks - ",newChunks);
+
+                    setDocumentSourceCache(prev => ({
+                        ...prev,
+                        ...newChunks
+                    }));
+                const newCitations = Object.entries(documentSources).map(([citationNumber, chunk]) => ({
+                    citationNumber: Number(citationNumber),
+                    chunkId: chunk.id
+                }));
+
+                    console.log("newCitations - ",newCitations);
+
+
                 setMessages(prev => {
 
+                    console.log('document sources - ',documentSources);
                     const updated = [...prev];
 
                     updated[updated.length - 1] = {
                         ...updated[updated.length - 1],
-                        documentSources,
+                        citations:newCitations,
                         loading:true
                     };
-                    console.log('document sources - ',documentSources)
 
                     return updated;
                 });

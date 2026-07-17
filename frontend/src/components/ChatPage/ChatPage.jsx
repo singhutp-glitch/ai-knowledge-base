@@ -40,7 +40,7 @@ const ChatPage = ({user,onLogout}) => {
           <div className="document-sources">
             {sourceBarSources.map((source)=><div key={source.sourceId}  className="document-source">
             
-                <div>source:{source.sourceId}</div>
+                <div>source:{source.citationNumber}</div>
                 <div>document file:{source.originalFileName}</div>
                 <div>text:{source.text.slice(0,200)}</div>
             </div>

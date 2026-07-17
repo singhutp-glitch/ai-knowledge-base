@@ -1,15 +1,13 @@
 import {prisma} from '../../lib/prisma.js';
 
-export async function saveMessages(chatId,role,content,sources=null){
+export async function saveMessages(chatId,role,content){
     return await prisma.message.create({
         data:{
             chatId,
             role,
             content,
-            sources,
         }
     });
-    
 }
 
 export async function createNewChat(
@@ -38,7 +36,7 @@ export async function searchChatIdwithUserId(userId,chatId){
             userId:userId
         }
     })
-}
+};
 
 export async function loadMessages(chatId) {
     return prisma.message.findMany({
