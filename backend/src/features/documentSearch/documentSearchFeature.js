@@ -27,10 +27,13 @@ content: ${chunk.text}
     `
     ).join('\n');
     
-        context.documentSources = Object.entries(chunkResults).map(([citationNumber, chunk]) => ({
+        context.documentSources = Object.entries(chunkResults).map(([objectKey, chunk]) => ({
         ...chunk,
-        citationNumber: Number(citationNumber),
+        citationNumber: (Number(objectKey)+1),
     }));
+
+
+    console.log('docSource - ',context.documentSources);
 
         feature.name = 'documentSearch';
         feature.instruction = DOCUMENT_SEARCH_PROMPT;

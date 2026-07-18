@@ -80,9 +80,9 @@ export async function saveCitations(chunkResults,messageId){
     if(chunkResults){
 
         await prisma.citation.createMany({
-            data: Object.entries(chunkResults).map(([citationNumber, chunk]) => ({
+            data: Object.entries(chunkResults).map(([objectKey, chunk]) => ({
                 messageId: messageId,
-                citationNumber: Number(citationNumber),
+                citationNumber: Number(chunk.citationNumber),
                 chunkId: chunk.id
             }))})
         };

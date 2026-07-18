@@ -142,8 +142,8 @@ const Main = ({currentChatId,setCurrentChatId,loadChats,messages,setMessages
                         ...prev,
                         ...newChunks
                     }));
-                const newCitations = Object.entries(documentSources).map(([citationNumber, chunk]) => ({
-                    citationNumber: Number(citationNumber),
+                const newCitations = Object.entries(documentSources).map(([cn, chunk]) => ({
+                    citationNumber: Number(chunk.citationNumber),
                     chunkId: chunk.id
                 }));
 
