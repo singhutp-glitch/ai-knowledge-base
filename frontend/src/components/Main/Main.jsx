@@ -284,15 +284,28 @@ ${chunkResult.text}
     }
 };
 
-  return (
-    <div className='main'>
-        <div className="main-container">
-          {messages.length === 0? <Greet user={user}/>: <ChatContainer messages = {messages}
-          setSourceBar={setSourceBar} setSourceBarSources={setSourceBarSources}
-        documentSourceCache={documentSourceCache} setDocumentSourceCache={setDocumentSourceCache} />}
-        </div> 
-        <div className="bottom">
+  return <div className="main">
 
+    <div className="main-content-area">
+        <div className="main-container">
+            {messages.length === 0 ? (
+                <Greet user={user} />
+            ) : (
+                <ChatContainer
+                    messages={messages}
+                    setSourceBar={setSourceBar}
+                    setSourceBarSources={setSourceBarSources}
+                    documentSourceCache={documentSourceCache}
+                    setDocumentSourceCache={setDocumentSourceCache}
+                />
+            )}
+        </div>
+
+        <div ref={bottomRef}></div>
+    </div>
+
+    <div className="bottom">
+       
             <div className="main-bottom">
                 {
                         showMenu && (
@@ -333,11 +346,15 @@ ${chunkResult.text}
                     </div>
                 </div>
             </div>
-        </div>
-            <div className='bottom-scroll-box' ref={bottomRef}></div>
-            <input type="file" ref={fileInputRef} hidden onChange={handleFileChange} />
     </div>
-  )
-}
 
+    <input
+        type="file"
+        ref={fileInputRef}
+        hidden
+        onChange={handleFileChange}
+    />
+
+</div>
+    }
 export default Main

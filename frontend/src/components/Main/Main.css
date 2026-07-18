@@ -1,13 +1,33 @@
 .main{
     flex: 1;
-    min-height: 100vh;
-    padding-bottom: 15vh;
-    position: relative;
+
+    display: flex;
+    flex-direction: column;
+
+    min-width: 0;
+    min-height: 0;
+
+    overflow: hidden;
 }
 
+.main-content-area{
+    flex: 1;
+
+    min-height: 0;
+    overflow-y: auto;
+}
 .main-container{
+    flex: 1;
+
+    width: 100%;
     max-width: 900px;
-    margin: auto;
+
+    margin: 0 auto;
+
+    min-height: 0;
+
+    display: flex;
+    flex-direction: column;
 }
 
 .main .greet{
@@ -57,15 +77,15 @@
 .main .card:hover{
     background-color: hsl(0, 0%, 80%);
 }
-
 .main .bottom{
-    position: fixed;
     display: flex;
     justify-content: center;
-    bottom: 0;
-    width: 100%;
+
+    flex-shrink: 0;
+
     background-color: white;
-    left:30px;
+
+    padding: 1rem 0;
 }
 .main-bottom{
     width: 100%;
@@ -109,9 +129,6 @@
     font-weight: 300;
 }
 
-.bottom-scroll-box{
-    height: 300px;
-}
 label.document-search-box{
     display: inline-flex;
   align-items: center;
