@@ -18,7 +18,8 @@ const Main = ({currentChatId,setCurrentChatId,loadChats,messages,setMessages
     const [showMenu,setShowMenu] = useState(false);
     const [selectedFile,setSelectedFile] = useState(null);
     const fileInputRef = useRef(null);
-    const [retrievelMode,setRetrievelMode] = useState(false);
+    const [knowledgeScope,setKnowledgeScope] = useState("chat");
+    const [searchMode,setSearchMode] = useState(false);
 
     useEffect(() => {
     scrollMessagesToBottom("auto");
@@ -272,7 +273,7 @@ ${chunkResult.text}
     if (!prompt.trim()) return;
     const userQuery = prompt;
     setPrompt("");
-    if(retrievelMode){
+    if(searchMode){
         sendRetrievelQuery({retrievalQuery:userQuery});
     }
     else{
@@ -312,40 +313,86 @@ function scrollMessagesToBottom(behavior = "smooth") {
     <div className="composer">
        
             <div className="main-bottom">
-                {
-                        showMenu && (
-                            <div className="attachmentMenu">
-                                 <button onClick={()=>{setRetrievelMode(prev=>!prev)}} >
-                                    Retrievel Mode - {`${retrievelMode}`}
-                                </button>
-                                <button onClick={handleUploadClick} >
-                                    Upload File
-                                </button>
-                            </div>
-                        )
+               {
+                    showMenu && (
+
+                    <div className="composer-toolbar">
+
+                        <button 
+                            onClick={handleUploadClick}
+                            className="toolbar-item"
+                        >
+                            Upload File
+                        </button>
+
+
+                        <div className="toolbar-item">
+
+                            <label>
+                                Knowledge Scope
+                            </label>
+
+                            <select
+                                value={knowledgeScope}
+                                onChange={(e)=>setKnowledgeScope(e.target.value)}
+                            >
+
+                                <option value="chat">
+                                    Chat Files
+                                </option>
+
+                                <option value="user">
+                                    User Files
+                                </option>
+
+                                <option value="company">
+                                    Company Knowledge
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <button
+                            className="toolbar-item"
+                            onClick={()=>setSearchMode(prev=>!prev)}
+                        >
+
+                            {searchMode ? "Search Mode" : "Chat Mode"}
+
+                        </button>
+
+
+                    </div>
+
+                    )
                     }
                     {selectedFile && (
                         <div>
                             📄 {selectedFile.name}
                         </div>
                     )}
-                {!retrievelMode && (<>
-                 <label className='document-search-box'>
-                    Document Search
-                    <input type="checkbox" checked={documentSearch} 
-                    onChange={(e) =>setDocumentSearch(e.target.checked)}/>
-                </label>
+                {!searchMode && (<>
                 </>)}
                 <div className="search-box">
                     <div >
-                        <img onClick={()=>{setShowMenu(!showMenu)}} src={assets.plus_icon} alt="" />
+                       <img
+                            onClick={()=>setShowMenu(prev=>!prev)}
+                            src={assets.plus_icon}
+                            className="composer-plus"
+                        />
                     </div>
                   
                     <input onChange={(e)=>{setPrompt(e.target.value)}} onKeyDown={(e) => {
         if (e.key === "Enter") {
             handleSend();
         }
-    }}type="text" placeholder={retrievelMode?'Retrievel query':'Enter prompt'} value={prompt}/>
+    }}type="text" placeholder={
+    searchMode
+    ? "Search your knowledge..."
+    : "Ask your documents..."
+} value={prompt}/>
                     <div>
                         <img onClick={handleSend} src={assets.send_icon} alt="" />
                     </div>
