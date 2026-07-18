@@ -36,32 +36,69 @@ async function handleSubmit(e) {
 }
 }
 
-return ( <div> <h1>Login</h1>
+return ( <div className="auth-page">
 
-  {error && <p>{error}</p>}
+    <div className="auth-card">
 
-  <form onSubmit={handleSubmit}>
-    <label htmlFor="email">Email</label>
-    <input
-      type="email"
-      id="email"
-      value={email}
-      onChange={(e) => setEmail(e.target.value)}
-    />
+        <div className="auth-header">
 
-    <label htmlFor="password">Password</label>
-    <input
-      type="password"
-      id="password"
-      value={password}
-      onChange={(e) => setPassword(e.target.value)}
-    />
+            <h1>Knowledge Workspace</h1>
 
-    <button type="submit">
-      Login
-    </button>
-  </form>
-  <button onClick={()=>{setAuthMode('register')}}>Register here</button>
+            <p>
+                Enterprise document intelligence with grounded answers and
+                verifiable citations.
+            </p>
+
+        </div>
+
+        <h2>Sign in</h2>
+
+        {error && <p className="auth-error">{error}</p>}
+
+        <form className="auth-form" onSubmit={handleSubmit}>
+
+            <label htmlFor="email">Email</label>
+
+            <input
+                type="email"
+                id="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Enter your email"
+            />
+
+            <label htmlFor="password">Password</label>
+
+            <input
+                type="password"
+                id="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="Enter your password"
+            />
+
+            <button type="submit">
+                Sign In
+            </button>
+
+        </form>
+
+        <div className="auth-footer">
+
+            <span>Don't have an account?</span>
+
+            <button
+                type="button"
+                className="link-button"
+                onClick={() => setAuthMode("register")}
+            >
+                Register
+            </button>
+
+        </div>
+
+    </div>
+
 </div>
 
 );}

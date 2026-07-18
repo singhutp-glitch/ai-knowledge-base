@@ -53,10 +53,10 @@ function onLogout(){
 
   return (
     <>
-    {user?<ChatPage onLogout={onLogout}  user={user}/>:
-    authMode==='register'?<Register setAuthMode={setAuthMode} />:
-    <LoginPage setUser={setUser} setAuthMode={setAuthMode}/>}
-    
+
+      {user?<ChatPage onLogout={onLogout}  user={user}/>:
+      authMode==='register'?<Register setAuthMode={setAuthMode} />:
+      <LoginPage setUser={setUser} setAuthMode={setAuthMode}/>}    
     </>
   )
 }

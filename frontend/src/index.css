@@ -23,7 +23,6 @@ body{
 }
 
 /* Root layout */
-
 #root{
     display: flex;
 }
