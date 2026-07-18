@@ -129,7 +129,7 @@ function stopResize(){
         <SourceCard
             key={source.id ?? index}
             source={source}
-            citationNumber={index + 1}
+            citationNumber={source.citationNumber}
         />
 
     ))}

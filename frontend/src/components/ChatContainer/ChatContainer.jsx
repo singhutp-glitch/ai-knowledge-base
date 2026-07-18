@@ -31,6 +31,8 @@ const ChatContainer = ({messages,setSourceBar,setSourceBarSources
         sideSources.push(cache);
       }else{
       const chunk = await getChunk(source.chunkId);
+      chunk.citationNumber = source.citationNumber;
+
       sideSources.push(chunk);
 
       setDocumentSourceCache(prev => ({
