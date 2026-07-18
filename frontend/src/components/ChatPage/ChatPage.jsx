@@ -46,19 +46,61 @@ const ChatPage = ({user,onLogout}) => {
       />
     </div>
 
-    {sourceBar && (
-      <div className="source-bar">
-        <div className="document-sources">
-          {sourceBarSources.map((source) => (
-            <div key={source.sourceId} className="document-source">
-              <div>source: {source.citationNumber}</div>
-              <div>document file: {source.originalFileName}</div>
-              <div>text: {source.text.slice(0, 200)}</div>
+   {sourceBar && (
+    <aside className="source-bar">
+
+        <div className="source-bar-header">
+
+            <div>
+                <h2>Sources</h2>
+                <p>
+                    {sourceBarSources.length} supporting passage
+                    {sourceBarSources.length !== 1 ? "s" : ""}
+                </p>
             </div>
-          ))}
+
+            <button
+                className="close-source-bar"
+                onClick={() => setSourceBar(false)}
+            >
+                ✕
+            </button>
+
         </div>
-      </div>
-    )}
+
+        <div className="source-bar-content">
+
+            <div className="document-sources">
+
+                {sourceBarSources.map((source, index) => (
+
+                    <div
+                        key={source.id ?? index}
+                        className="document-source"
+                    >
+
+                        <div>
+                            Source {index + 1}
+                        </div>
+
+                        <div>
+                            {source.document.originalFileName}
+                        </div>
+
+                        <div>
+                            {source.text.slice(0, 200)}...
+                        </div>
+
+                    </div>
+
+                ))}
+
+            </div>
+
+        </div>
+
+    </aside>
+)}
   </div>
 </div>
            </>
