@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { registerUser } from "../../services/authApi";
+import "./RegisterPage.css";
+
 
 const RegisterPage = ({setAuthMode}) => {
 const [name, setName] = useState("");
@@ -34,42 +36,80 @@ setAuthMode('login');
 
 }
 
-return ( <div> <h1>Create Account</h1>
+return ( <div className="auth-page">
 
-  {error && <p>{error}</p>}
+    <div className="auth-card">
 
-  <form onSubmit={handleSubmit}>
-    <label htmlFor="name">Name</label>
-    <input
-      type="text"
-      id="name"
-      value={name}
-      onChange={(e) => setName(e.target.value)}
-    />
+        <div className="auth-header">
 
-    <label htmlFor="email">Email</label>
-    <input
-      type="email"
-      id="email"
-      value={email}
-      onChange={(e) => setEmail(e.target.value)}
-    />
+            <h1>Knowledge Workspace</h1>
 
-    <label htmlFor="password">Password</label>
-    <input
-      type="password"
-      id="password"
-      value={password}
-      onChange={(e) => setPassword(e.target.value)}
-    />
+            <p>
+                Enterprise document intelligence with grounded answers and
+                verifiable citations.
+            </p>
 
-    <button type="submit">
-      Register
-    </button>
-  </form>
-  <button onClick={()=>{setAuthMode('login')}}>Login here</button>
+        </div>
+
+        <h2>Create Account</h2>
+
+        {error && <p className="auth-error">{error}</p>}
+
+        <form className="auth-form" onSubmit={handleSubmit}>
+
+            <label htmlFor="name">Name</label>
+
+            <input
+                type="text"
+                id="name"
+                placeholder="Enter your name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+            />
+
+            <label htmlFor="email">Email</label>
+
+            <input
+                type="email"
+                id="email"
+                placeholder="Enter your email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+            />
+
+            <label htmlFor="password">Password</label>
+
+            <input
+                type="password"
+                id="password"
+                placeholder="Create a password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+            />
+
+            <button type="submit">
+                Create Account
+            </button>
+
+        </form>
+
+        <div className="auth-footer">
+
+            <span>Already have an account?</span>
+
+            <button
+                type="button"
+                className="link-button"
+                onClick={() => setAuthMode("login")}
+            >
+                Sign In
+            </button>
+
+        </div>
+
+    </div>
+
 </div>
-
 );
 };
 
