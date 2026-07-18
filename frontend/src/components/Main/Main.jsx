@@ -304,7 +304,7 @@ ${chunkResult.text}
         <div ref={bottomRef}></div>
     </div>
 
-    <div className="bottom">
+    <div className="composer">
        
             <div className="main-bottom">
                 {
