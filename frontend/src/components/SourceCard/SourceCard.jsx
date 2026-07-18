@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import "./SourceCard.css";
 
 const SourceCard = ({ source, citationNumber }) => {
+    const [showFullChunk,setShowFullChunk] = useState(false);
 
     return (
         <div className="source-card">
@@ -35,7 +36,10 @@ const SourceCard = ({ source, citationNumber }) => {
 
             <div className="source-evidence">
 
-                "...{source.text.slice(0,200)}..."
+
+                {showFullChunk?
+                <span>{source.text.slice(0,1000)}<button onClick={()=>{setShowFullChunk(false)}}> view less</button></span> :
+                <span>...{source.text.slice(0,200)}...<button onClick={()=>{setShowFullChunk(true)}}> view more</button></span>}
 
             </div>
 
