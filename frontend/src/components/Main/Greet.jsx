@@ -1,30 +1,81 @@
-import React from 'react'
-import { assets } from '../../assets/assets'
-import './Main.css'
+import React from "react";
+import "./Main.css";
+import { assets } from "../../assets/assets";
 
-const Greet = ({user}) => {
-  return (<><div className="greet">
-                  <p><span>Hello, {user.name.split(' ')[0]}</span></p>
-                  <p>How can i help you ?</p>
-              </div>
-              <div className="cards">
-                  <div className="card">
-                      <p>Suggest beautiful places to see on upcoming road trip</p>
-                      <img src={assets.compass_icon} alt="" />
-                  </div>
-                  <div className="card">
-                      <p>Explain this concept of urban planning</p>
-                      <img src={assets.bulb_icon} alt="" />
-                  </div>
-                  <div className="card">
-                      <p>Brainstorm some ideas for upcoming tean project</p>
-                      <img src={assets.message_icon} alt="" />
-                  </div>
-                  <div className="card">
-                      <p>Improve the readability of the following code</p>
-                      <img src={assets.code_icon} alt="" />
-                  </div>
-              </div></>)
-}
+const Greet = () => {
+    return (
+        <div className="greet-page">
 
-export default Greet
+            <div className="hero">
+
+                <h1>Knowledge Workspace</h1>
+
+                <p>
+                    Search, analyze and verify information across your organization's
+                    documents. Every answer is grounded in retrieved sources and backed
+                    by citations you can inspect.
+                </p>
+
+            </div>
+
+           <div className="workflow-section">
+
+    <h2>How it works</h2>
+
+    <div className="workflow">
+
+        <div className="workflow-step">
+
+            <img src={assets.plus_icon} alt="" />
+
+            <h3>Upload Documents</h3>
+
+            <p>Add PDFs to your knowledge workspace.</p>
+
+        </div>
+
+        <div className="workflow-arrow">→</div>
+
+        <div className="workflow-step">
+
+            <img src={assets.compass_icon} alt="" />
+
+            <h3>Semantic Retrieval</h3>
+
+            <p>Relevant passages are retrieved for every query.</p>
+
+        </div>
+
+        <div className="workflow-arrow">→</div>
+
+        <div className="workflow-step">
+
+            <img src={assets.message_icon} alt="" />
+
+            <h3>Grounded Answer</h3>
+
+            <p>The model answers using only retrieved evidence.</p>
+
+        </div>
+
+        <div className="workflow-arrow">→</div>
+
+        <div className="workflow-step">
+
+            <img src={assets.code_icon} alt="" />
+
+            <h3>Source Verification</h3>
+
+            <p>Inspect every citation and supporting document.</p>
+
+        </div>
+
+    </div>
+
+</div>
+
+        </div>
+    );
+};
+
+export default Greet;
