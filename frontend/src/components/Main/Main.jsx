@@ -14,11 +14,17 @@ const Main = ({currentChatId,setCurrentChatId,loadChats,messages,setMessages
     ,user,setSourceBar, setSourceBarSources,documentSourceCache, setDocumentSourceCache}) => {
     const [prompt,setPrompt] = useState('');
     const [documentSearch,setDocumentSearch] = useState(false);
-    const bottomRef = useRef(null);
+    const messageViewportRef = useRef(null);
     const [showMenu,setShowMenu] = useState(false);
     const [selectedFile,setSelectedFile] = useState(null);
     const fileInputRef = useRef(null);
     const [retrievelMode,setRetrievelMode] = useState(false);
+
+    useEffect(() => {
+    scrollMessagesToBottom("auto");
+}, [messages]);
+
+
 
     function handleUploadClick() {
         fileInputRef.current.click();
@@ -80,9 +86,7 @@ const Main = ({currentChatId,setCurrentChatId,loadChats,messages,setMessages
         },
     ]);
 
-        bottomRef.current?.scrollIntoView({
-        behavior: "smooth",
-    });
+        scrollMessagesToBottom("smooth");
     try {
 
         let chatId = currentChatId;
@@ -121,10 +125,7 @@ const Main = ({currentChatId,setCurrentChatId,loadChats,messages,setMessages
                         loading: false,
                     };
 
-                //     bottomRef.current?.scrollIntoView({
-                //     behavior: "auto",
-                //     block: "end",
-                // });
+                    scrollMessagesToBottom("smooth");
                     return updated;
                 });
             },
@@ -216,9 +217,7 @@ const Main = ({currentChatId,setCurrentChatId,loadChats,messages,setMessages
         },
     ]);
 
-        bottomRef.current?.scrollIntoView({
-        behavior: "smooth",
-    });
+       scrollMessagesToBottom("smooth");
     try {
 
         let chatId = currentChatId;
@@ -257,10 +256,7 @@ ${chunkResult.text}
                         loading: false
                     };
                   
-                //     bottomRef.current?.scrollIntoView({
-                //     behavior: "auto",
-                //     block: "end",
-                // });
+           scrollMessagesToBottom("smooth");
                     return updated;
                 });
             
@@ -284,9 +280,19 @@ ${chunkResult.text}
     }
 };
 
+function scrollMessagesToBottom(behavior = "smooth") {
+    if (!messageViewportRef.current) return;
+
+    messageViewportRef.current.scrollTo({
+        top: messageViewportRef.current.scrollHeight,
+        behavior,
+    });
+}
+
+
   return <div className="main">
 
-    <div className="main-content-area">
+    <div className="message-viewport"    ref={messageViewportRef}> 
         <div className="main-container">
             {messages.length === 0 ? (
                 <Greet user={user} />
@@ -301,7 +307,6 @@ ${chunkResult.text}
             )}
         </div>
 
-        <div ref={bottomRef}></div>
     </div>
 
     <div className="composer">
