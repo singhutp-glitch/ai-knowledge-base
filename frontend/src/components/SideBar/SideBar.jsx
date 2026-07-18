@@ -41,7 +41,7 @@ const SideBar = ({user,onLogout,chats,currentChatId,setCurrentChatId,setMessages
       <div className='bottom'>
         <div className="bottom-item recent-entry">
           <UserProfile user={user} onLogout={onLogout}/>
-          {extended?<p className='bottom-user-name'>{user.name}</p>:null}
+          {extended?<p className='bottom-user-name'>{user.name}...</p>:null}
         </div>
       </div>
     </div>

@@ -1,5 +1,5 @@
 import React from "react";
-import "./Main.css";
+import "./Greet.css";
 import { assets } from "../../assets/assets";
 
 const Greet = () => {

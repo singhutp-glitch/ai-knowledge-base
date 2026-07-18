@@ -7,7 +7,7 @@ import { createNewChatId } from '../../services/api.js'
 import { uploadDocument } from '../../services/ragApi.js'
 import { sendRetrievalQuery } from '../../services/ragApi.js'
 import ChatContainer from '../ChatContainer/ChatContainer.jsx'
-import Greet from './Greet.jsx'
+import Greet from '../Greet/Greet.jsx'
 
 
 const Main = ({currentChatId,setCurrentChatId,loadChats,messages,setMessages
