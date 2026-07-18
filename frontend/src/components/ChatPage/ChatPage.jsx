@@ -3,6 +3,7 @@ import './ChatPage.css'
 import SideBar from "../SideBar/SideBar"
 import Main from "../Main/Main"
 import NavBar from "../NavBar/NavBar";
+import SourceCard from "../SourceCard/SourceCard";
 import { getChats } from "../../services/api.js";
 
 const ChatPage = ({user,onLogout}) => {
@@ -72,30 +73,17 @@ const ChatPage = ({user,onLogout}) => {
 
             <div className="document-sources">
 
-                {sourceBarSources.map((source, index) => (
+    {sourceBarSources.map((source, index) => (
 
-                    <div
-                        key={source.id ?? index}
-                        className="document-source"
-                    >
+        <SourceCard
+            key={source.id ?? index}
+            source={source}
+            citationNumber={index + 1}
+        />
 
-                        <div>
-                            Source {index + 1}
-                        </div>
+    ))}
 
-                        <div>
-                            {source.document.originalFileName}
-                        </div>
-
-                        <div>
-                            {source.text.slice(0, 200)}...
-                        </div>
-
-                    </div>
-
-                ))}
-
-            </div>
+</div>
 
         </div>
 
