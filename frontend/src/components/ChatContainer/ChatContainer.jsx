@@ -42,7 +42,7 @@ const ChatContainer = ({messages,setSourceBar,setSourceBarSources
 
 
     setSourceBarSources(sideSources)
-    setSourceBar(prev => !prev);
+    setSourceBar(true);
   }
 
   return (
