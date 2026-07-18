@@ -13,7 +13,7 @@ import Greet from './Greet.jsx'
 const Main = ({currentChatId,setCurrentChatId,loadChats,messages,setMessages
     ,user,setSourceBar, setSourceBarSources,documentSourceCache, setDocumentSourceCache}) => {
     const [prompt,setPrompt] = useState('');
-    const [documentSearch,setDocumentSearch] = useState(false);
+    const [documentSearch,setDocumentSearch] = useState(true);
     const messageViewportRef = useRef(null);
     const [showMenu,setShowMenu] = useState(false);
     const [selectedFile,setSelectedFile] = useState(null);
@@ -72,6 +72,7 @@ const Main = ({currentChatId,setCurrentChatId,loadChats,messages,setMessages
 }
 
     async function sendModelPrompt({currentPrompt}){
+        console.log('run sendModelPromot');
          setMessages(prev => [
         ...prev,
         {

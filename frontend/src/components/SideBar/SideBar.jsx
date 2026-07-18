@@ -31,7 +31,7 @@ const SideBar = ({user,onLogout,chats,currentChatId,setCurrentChatId,setMessages
           <div key = {chat.id} className={'recent-entry'+(chat.id===currentChatId?' current-chat':'')}
           onClick={()=>{handleChatClick(chat.id)}}>
           <img src={assets.message_icon} alt="" />
-          <p>{chat.title.slice(0,20)}</p>
+          <p>{chat.title.slice(0,19)}</p>
         </div>
         ))}
         

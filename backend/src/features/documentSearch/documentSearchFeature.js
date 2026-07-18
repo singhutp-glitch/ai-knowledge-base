@@ -31,6 +31,7 @@ content: ${chunk.text}
         ...chunk,
         citationNumber: Number(citationNumber),
     }));
+
         feature.name = 'documentSearch';
         feature.instruction = DOCUMENT_SEARCH_PROMPT;
         feature.resource = resultText;

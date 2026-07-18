@@ -76,13 +76,19 @@ export async function loadChats(userId) {
 }
 
 export async function saveCitations(chunkResults,messageId){
-    await prisma.citation.createMany({
-    data: Object.entries(chunkResults).map(([citationNumber, chunk]) => ({
-        messageId: messageId,
-        citationNumber: Number(citationNumber),
-        chunkId: chunk.id
-    }))
-});
+   try{ 
+    if(chunkResults){
+
+        await prisma.citation.createMany({
+            data: Object.entries(chunkResults).map(([citationNumber, chunk]) => ({
+                messageId: messageId,
+                citationNumber: Number(citationNumber),
+                chunkId: chunk.id
+            }))})
+        };
+        }catch(error){
+    console.error(error);
+}
    
 };
 
