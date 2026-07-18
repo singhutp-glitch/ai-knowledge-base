@@ -26,10 +26,10 @@
     min-width: 0;
     min-height: 0;
 
+    display:flex;
     overflow: hidden;
 }
 .source-bar {
-    width: 25rem;
 
     display: flex;
     flex-direction: column;
@@ -105,3 +105,21 @@
     padding: 1rem;
 }
 
+.source-resize-handle {
+
+    width: 5px;
+
+    cursor: col-resize;
+
+    background: transparent;
+
+    flex-shrink: 0;
+
+}
+
+
+.source-resize-handle:hover {
+
+    background: #d0d0d0;
+
+}

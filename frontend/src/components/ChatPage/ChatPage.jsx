@@ -13,6 +13,7 @@ const ChatPage = ({user,onLogout}) => {
   const [sourceBar,setSourceBar] = useState(false);
   const [sourceBarSources,setSourceBarSources] = useState(null);
   const [documentSourceCache, setDocumentSourceCache] = useState({});
+  const [sourceBarWidth, setSourceBarWidth] = useState(25 * 16);
 
   async function loadChats(){
     const userChats = await getChats();
@@ -23,6 +24,45 @@ const ChatPage = ({user,onLogout}) => {
     loadChats();
 
   }, []);
+
+function handleSourceResize(e) {
+
+    const newWidth = window.innerWidth - e.clientX;
+
+    if(newWidth > 300 && newWidth < 700){
+        setSourceBarWidth(newWidth);
+    }
+
+}
+
+function startResize(){
+
+    document.addEventListener(
+        "mousemove",
+        handleSourceResize
+    );
+
+    document.addEventListener(
+        "mouseup",
+        stopResize
+    );
+
+}
+
+
+function stopResize(){
+
+    document.removeEventListener(
+        "mousemove",
+        handleSourceResize
+    );
+
+    document.removeEventListener(
+        "mouseup",
+        stopResize
+    );
+
+}
 
   return (
     <>
@@ -48,7 +88,18 @@ const ChatPage = ({user,onLogout}) => {
     </div>
 
    {sourceBar && (
-    <aside className="source-bar">
+    <>
+        <div
+            className="source-resize-handle"
+            onMouseDown={startResize}
+        />
+
+        <aside
+            className="source-bar"
+            style={{
+                width:`${sourceBarWidth}px`
+            }}
+        >
 
         <div className="source-bar-header">
 
@@ -88,6 +139,7 @@ const ChatPage = ({user,onLogout}) => {
         </div>
 
     </aside>
+     </>
 )}
   </div>
 </div>

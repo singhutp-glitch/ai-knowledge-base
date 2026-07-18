@@ -31,14 +31,13 @@
     overflow-x: hidden;
 }
 .main-container {
+
     width: 100%;
+
     max-width: 900px;
 
     margin: 0 auto;
 
-    padding: 1.25rem;
-
-    min-width: 0;
 }
 .main .greet{
     margin:50px 0;
