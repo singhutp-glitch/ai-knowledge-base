@@ -21,7 +21,7 @@ const SourceCard = ({ source, citationNumber }) => {
 
             <div className="source-document">
 
-                {source.document.originalFileName}
+                {source.originalFileName}
 
             </div>
 

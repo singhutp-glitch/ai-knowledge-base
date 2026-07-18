@@ -94,7 +94,7 @@ export async function saveCitations(chunkResults,messageId){
 
 
 export async function loadChunk(chunkId) {
-    return await prisma.chunk.findUnique({
+    const chunk = await prisma.chunk.findUnique({
         where: {
             id: chunkId,
         },
@@ -111,4 +111,6 @@ export async function loadChunk(chunkId) {
             },
         },
     });
+    chunk.originalFileName = chunk.document.originalFileName;
+    return chunk;
 }
