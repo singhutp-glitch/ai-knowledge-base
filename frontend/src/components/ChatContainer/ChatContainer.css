@@ -14,6 +14,7 @@
 
 .message.user {
   justify-content: flex-end;
+  
 }
 
 .message.user .message-content {
@@ -31,7 +32,7 @@
   background: #f3f3f3;
   padding: 20px 28px;
   border-radius: 18px;
-  max-width: 75%;
+  width: 90%;
   line-height: 1.7;
   white-space: pre-wrap;
 }

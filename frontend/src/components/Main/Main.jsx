@@ -314,7 +314,13 @@ function scrollMessagesToBottom(behavior = "smooth") {
     <div className="composer">
        
             <div className="main-bottom">
+                {selectedFile && (
+                        <div className='selected-file'>
+                            📄 {selectedFile.name}
+                        </div>
+                    )}
                {
+
                     showMenu && (
 
                     <div className="composer-toolbar">
@@ -339,11 +345,11 @@ function scrollMessagesToBottom(behavior = "smooth") {
                             >
 
                                 <option value="chat">
-                                    Chat Files
+                                     Chat Files
                                 </option>
 
                                 <option value="user">
-                                    User Files
+                                    All User Files
                                 </option>
 
                                 <option value="company">
@@ -369,11 +375,7 @@ function scrollMessagesToBottom(behavior = "smooth") {
 
                     )
                     }
-                    {selectedFile && (
-                        <div>
-                            📄 {selectedFile.name}
-                        </div>
-                    )}
+                   
                 {!searchMode && (<>
                 </>)}
                 <div className="search-box">
@@ -384,7 +386,7 @@ function scrollMessagesToBottom(behavior = "smooth") {
                             className="composer-plus"
                         />
                     </div>
-                  
+                   
                     <input onChange={(e)=>{setPrompt(e.target.value)}} onKeyDown={(e) => {
         if (e.key === "Enter") {
             handleSend();
