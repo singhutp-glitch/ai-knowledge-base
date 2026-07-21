@@ -10,8 +10,10 @@ export const config ={
 
     geminiApiKey: process.env.GEMINI_API_KEY,
 
-    tavilyApiKey: process.env.TAVILY_API_KEY,
     frontendUrl: process.env.FRONTEND_URL,
+    
+    supabaseUrl : process.env.SUPABASE_URL,
+    supabaseServiceRoleKey : process.SUPABASE_SERVICE_ROLE_KEY
 };
 
 // config/env.js
@@ -20,8 +22,9 @@ const required = [
     "DATABASE_URL",
     "JWT_SECRET",
     "GEMINI_API_KEY",
-    "TAVILY_API_KEY",
-    'FRONTEND_URL'
+    'FRONTEND_URL',
+    "SUPABASE_URL",
+    "SUPABASE_SERVICE_ROLE_KEY"
 ];
 
 for (const key of required) {
