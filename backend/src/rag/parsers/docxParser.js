@@ -2,7 +2,7 @@ import mammoth from 'mammoth'
 
 export async function parseDocx(file){
     const result = await mammoth.extractRawText({
-        path:file.path,
+        buffer:file.buffer,
     })
 
     return {

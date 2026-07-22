@@ -1,4 +1,5 @@
 import { createClient } from "@supabase/supabase-js";
+import path from 'path';
 
 const supabase = createClient(
     process.env.SUPABASE_URL,
@@ -46,6 +47,8 @@ export async function deleteDocument(path){
     }
 }
 
-export function createStoragePath(userId,chatId,extension){
-    rewturn `user-${userId}/chat-${chatId}/${extension}`;
+export function createStoragePath(userId,chatId,file){
+
+    const extension = path.extname(file.originalname);
+    return `user-${userId}/chat-${chatId}/${crypto.randomUUID()}${extension}`;
 }

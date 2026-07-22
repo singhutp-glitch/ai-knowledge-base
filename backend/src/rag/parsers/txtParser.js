@@ -1,7 +1,7 @@
 import fs from 'fs/promises'
 
 export async function parseTxt(file){
-    const text = await fs.readFile(file.path,'utf8');
+    const text = file.buffer.toString("utf8");
     return {
         text,
         metaData:{

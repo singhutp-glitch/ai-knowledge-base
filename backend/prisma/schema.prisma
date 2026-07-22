@@ -46,6 +46,7 @@ model Message {
 model Document {
   id               Int      @id @default(autoincrement())
   originalFileName String   @db.VarChar(255)
+  storagePath      String   
   mimeType         String   @db.VarChar(100)
   fileSize         Int
   uploadedAt       DateTime @default(now())

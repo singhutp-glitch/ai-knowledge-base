@@ -5,8 +5,10 @@ import { saveChunk } from "../services/chunkService.js";
 import { saveDocumentandChunk } from "../services/ingestionService.js";
 import { generateEmbeddings } from "../embeddings/embeddingService.js";
 import { searchChatIdwithUserId } from "../../services/databaseService.js";
+import {uploadDocument} from '../../services/storageService.js'
+import { createStoragePath } from "../../services/storageService.js";
 
-export default async function uploadDocument(req,res){
+export default async function postUploadDocument(req,res){
     if(!req.file){
         return res.status(400).json({
             error:'No file uploaded'
@@ -21,6 +23,9 @@ export default async function uploadDocument(req,res){
                 error:'Chat not found'
             })
         };
+        const storagePath = createStoragePath(req.user.userId,chatId,req.file);
+        await uploadDocument(req.buffer,storagePath,req.file.mimetype);
+
         const parsedDocument = await parseDocument(req.file);
         console.log('result - ',parsedDocument.text.substring(0,500));
         const chunks = await chunkDocument(parsedDocument);
@@ -34,7 +39,9 @@ export default async function uploadDocument(req,res){
             mimetype: req.file.mimetype,
             size: req.file.size,
             userId: req.user.userId,
-            chatId: chatId},chunks);
+            chatId: chatId,
+            path:storagePath
+        },chunks);
         
             console.log('document - ',document);
 
