@@ -28,6 +28,7 @@ const Main = ({currentChatId,setCurrentChatId,loadChats,messages,setMessages
 
 
     function handleUploadClick() {
+
         fileInputRef.current.click();
     };
     async function handleUpload() {
@@ -270,6 +271,7 @@ ${chunkResult.text}
 
 
     const handleSend = async () => {
+        console.log('send');
     await handleUpload();
     if (!prompt.trim()) return;
     const userQuery = prompt;

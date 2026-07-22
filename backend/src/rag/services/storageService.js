@@ -20,7 +20,7 @@ export async function uploadDocument(buffer,path,mimeType){
         throw(error);
     }
 
-    return data;
+    return data.path;
 }
 
 export async function downloadDocument(path){
