@@ -25,6 +25,7 @@ export async function getChunks(req,res){
                     error: "Query is required"
                 });
             }
+
             const queryEmbedding = await generateQueryEmbeddings(query);
             const chunkResults = await retrieveChunks(queryEmbedding,chatId);
 

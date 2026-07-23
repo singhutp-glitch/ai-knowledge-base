@@ -20,6 +20,8 @@ const Main = ({currentChatId,setCurrentChatId,loadChats,messages,setMessages
     const fileInputRef = useRef(null);
     const [knowledgeScope,setKnowledgeScope] = useState("chat");
     const [searchMode,setSearchMode] = useState(false);
+    const [isUploading,setIsUploading] = useState(false);
+    
 
     useEffect(() => {
     scrollMessagesToBottom("auto");
@@ -27,7 +29,8 @@ const Main = ({currentChatId,setCurrentChatId,loadChats,messages,setMessages
 
     
     const isSendDisabled = knowledgeScope === 'user'||
-                           knowledgeScope === 'company';
+                           knowledgeScope === 'company'||
+                           isUploading;
     const documentSearch = knowledgeScope !== 'nofile';
 
     function handleUploadClick() {
@@ -47,19 +50,18 @@ const Main = ({currentChatId,setCurrentChatId,loadChats,messages,setMessages
         }
 
     try {
+        setIsUploading(true);
 
         const uploadResponse = await uploadDocument(selectedFile,chatId);
 
         setSelectedFile(null);
-
         fileInputRef.current.value = "";
+        setIsUploading(false);
 
     } catch (err) {
 
         console.error(err);
-
     }
-
 }
 
     function handleFileChange(event) {
@@ -331,9 +333,10 @@ function scrollMessagesToBottom(behavior = "smooth") {
 
                         <button 
                             onClick={handleUploadClick}
-                            className="toolbar-item"
+                            className={`toolbar-item ${isUploading?'uploading':''}`}
+                            disabled={isUploading}
                         >
-                            Upload File
+                            {isUploading?'Uploading...':'Upload File'}
                         </button>
 
 

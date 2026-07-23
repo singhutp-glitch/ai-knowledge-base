@@ -14,7 +14,10 @@ const  documentSearchFeature = {
                 status:"Searching..."
             })}\n`);
         const feature = {};
-        
+
+
+
+        console.log('messages - ',context.userMessages);
         const queryEmbedding = await generateQueryEmbeddings(context.userPrompt);
         const chunkResults = await retrieveChunks(queryEmbedding,context.chatId);
          const resultText = chunkResults.map((chunk,index)=>
