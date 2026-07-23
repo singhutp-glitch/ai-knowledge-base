@@ -71,7 +71,6 @@ export async function streamMessage(
                 const data = JSON.parse(line);
                 
                 if(data.type === 'documentSources'){
-                    console.log("documentSources 1:",data.sources);
                     onDocumentSource(data.sources);
                 }
 

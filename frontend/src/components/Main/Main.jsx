@@ -53,7 +53,6 @@ const Main = ({currentChatId,setCurrentChatId,loadChats,messages,setMessages
         setSelectedFile(null);
 
         fileInputRef.current.value = "";
-        console.log(uploadResponse);
 
     } catch (err) {
 
@@ -76,7 +75,6 @@ const Main = ({currentChatId,setCurrentChatId,loadChats,messages,setMessages
 }
 
     async function sendModelPrompt({currentPrompt}){
-        console.log('run sendModelPromot');
          setMessages(prev => [
         ...prev,
         {
@@ -140,7 +138,6 @@ const Main = ({currentChatId,setCurrentChatId,loadChats,messages,setMessages
                         acc[chunk.id] = chunk;
                         return acc;
                     }, {});
-                    console.log("newChunks - ",newChunks);
 
                     setDocumentSourceCache(prev => ({
                         ...prev,
@@ -151,12 +148,7 @@ const Main = ({currentChatId,setCurrentChatId,loadChats,messages,setMessages
                     chunkId: chunk.id
                 }));
 
-                    console.log("newCitations - ",newCitations);
-
-
                 setMessages(prev => {
-
-                    console.log('document sources - ',documentSources);
                     const updated = [...prev];
 
                     updated[updated.length - 1] = {
@@ -246,7 +238,6 @@ ${chunkResult.text}
             `
         })
         const textResults = textResponse.join("");
-        console.log('response - ',response.chunkResults);
   
         setMessages(prev => {
 
