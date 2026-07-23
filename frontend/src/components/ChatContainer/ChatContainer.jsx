@@ -1,4 +1,3 @@
-import React, { useEffect, useRef } from 'react'
 import { assets } from '../../assets/assets'
 import './ChatContainer.css'
 import ReactMarkdown from "react-markdown";
