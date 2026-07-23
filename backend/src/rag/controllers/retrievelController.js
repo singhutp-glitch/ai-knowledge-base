@@ -27,7 +27,6 @@ export async function getChunks(req,res){
             }
             const queryEmbedding = await generateQueryEmbeddings(query);
             const chunkResults = await retrieveChunks(queryEmbedding,chatId);
-            console.log('chunkResult - ',chunkResults);
 
                 res.status(200).json({
                     message:'Retrieval successful',

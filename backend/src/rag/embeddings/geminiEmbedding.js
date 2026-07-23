@@ -6,7 +6,6 @@ const ai = new GoogleGenAI({
 });
 
 export async function geminiEmbedding(texts){
-    console.log('embedding call start');
     const response = await ai.models.embedContent({
         model:'gemini-embedding-2',
         contents:texts,
@@ -15,13 +14,10 @@ export async function geminiEmbedding(texts){
             outputDimensionality: 768
         }
     })
-    console.log('embedding call end');
     return response.embeddings.map((embedding) => embedding.values);
 }
 
 export async function geminiQueryEmbedding(text){
-    console.log('query embedding call start');
-    console.log('text - ',text);
     const response = await ai.models.embedContent({
         model:'gemini-embedding-2',
         contents:text,
@@ -30,7 +26,6 @@ export async function geminiQueryEmbedding(text){
             outputDimensionality: 768
         }
     })
-    console.log('query embedding call end');
     return response.embeddings[0].values;
 }
 

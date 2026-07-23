@@ -29,12 +29,9 @@ export default async function postUploadDocument(req,res){
         uploadSucceeded = await uploadDocument(req.file.buffer,storagePath,req.file.mimetype);
 
         const parsedDocument = await parseDocument(req.file);
-        console.log('result - ',parsedDocument.text.substring(0,500));
         const chunks = await chunkDocument(parsedDocument);
 
         const finalChunks = await generateEmbeddings(chunks);
-        console.log('final chunks- ',finalChunks.slice(0,3));
-
 
         const document = await saveDocumentandChunk({
             originalname: req.file.originalname,
@@ -45,7 +42,6 @@ export default async function postUploadDocument(req,res){
             storagePath,
         },chunks);
         
-            console.log('document - ',document);
 
             res.status(200).json({
                 message:'Upload successful'
