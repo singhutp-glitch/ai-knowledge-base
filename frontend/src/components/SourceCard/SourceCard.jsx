@@ -38,8 +38,8 @@ const SourceCard = ({ source, citationNumber }) => {
 
 
                 {showFullChunk?
-                <span>{source.text.slice(0,1000)}<span class='more' onClick={()=>{setShowFullChunk(false)}}>  less</span></span> :
-                <span>...{source.text.slice(0,200)}...<span class='less' onClick={()=>{setShowFullChunk(true)}}>  more</span></span>}
+                <span>{source.text.slice(0,1000)}<span className='more' onClick={()=>{setShowFullChunk(false)}}>  less</span></span> :
+                <span>...{source.text.slice(0,200)}...<span className='less' onClick={()=>{setShowFullChunk(true)}}>  more</span></span>}
 
             </div>
 

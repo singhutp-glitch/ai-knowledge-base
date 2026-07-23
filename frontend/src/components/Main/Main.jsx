@@ -24,8 +24,8 @@ const Main = ({currentChatId,setCurrentChatId,loadChats,messages,setMessages
     useEffect(() => {
     scrollMessagesToBottom("auto");
 }, [messages]);
-
-
+    
+    const isSendDisabled = knowledgeScope !== 'chat';
 
     function handleUploadClick() {
 
@@ -321,6 +321,14 @@ function scrollMessagesToBottom(behavior = "smooth") {
                             📄 {selectedFile.name}
                         </div>
                     )}
+                {knowledgeScope === 'company' &&(
+                    <div className='search-scope-message'>
+                            No company knowledge connect
+                        </div>)}
+                  {knowledgeScope === 'user' &&(
+                    <div className='search-scope-message'>
+                            No user files connected
+                        </div>)}
                {
 
                     showMenu && (
@@ -398,9 +406,10 @@ function scrollMessagesToBottom(behavior = "smooth") {
     ? "Search your knowledge..."
     : "Ask your documents..."
 } value={prompt}/>
-                    <div>
-                        <img onClick={handleSend} src={assets.send_icon} alt="" />
-                    </div>
+                    <button onClick={handleSend} disabled={isSendDisabled} 
+                    className='send-button'>
+                        <img  src={assets.send_icon} alt="" />
+                    </button>
                 </div>
             </div>
     </div>

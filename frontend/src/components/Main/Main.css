@@ -231,3 +231,37 @@ label.document-search-box{
     font-weight: 500;
 
 }
+
+.send-button {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+}
+
+.send-button:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.search-scope-message{
+     display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    margin-bottom: 0.75rem;
+    padding: 0.45rem 0.75rem;
+
+    width: fit-content;
+
+    background: #eff6ff;
+    border: 1px solid #bfdbfe;
+    border-radius: 0.6rem;
+
+    color: #1d4ed8;
+
+    font-size: 1rem;
+    font-weight: 500;
+
+
+}
