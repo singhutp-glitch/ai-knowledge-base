@@ -17,7 +17,6 @@ const  documentSearchFeature = {
         
         const queryEmbedding = await generateQueryEmbeddings(context.userPrompt);
         const chunkResults = await retrieveChunks(queryEmbedding,context.chatId);
-        console.log('chunkResult - ',chunkResults);
          const resultText = chunkResults.map((chunk,index)=>
         `
 Source id: [${index+1}]
@@ -31,9 +30,6 @@ content: ${chunk.text}
         ...chunk,
         citationNumber: (Number(objectKey)+1),
     }));
-
-
-    console.log('docSource - ',context.documentSources);
 
         feature.name = 'documentSearch';
         feature.instruction = DOCUMENT_SEARCH_PROMPT;

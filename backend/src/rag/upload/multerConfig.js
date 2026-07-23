@@ -11,7 +11,6 @@ function fileFilter(req,file,cb){
 
         "text/plain"
     ];
-    console.log("file: ",file)
     if(allowedTypes.includes(file.mimetype)){
         cb(null,true);
     }else{
