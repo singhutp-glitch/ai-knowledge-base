@@ -13,7 +13,7 @@ import Greet from '../Greet/Greet.jsx'
 const Main = ({currentChatId,setCurrentChatId,loadChats,messages,setMessages
     ,user,setSourceBar, setSourceBarSources,documentSourceCache, setDocumentSourceCache}) => {
     const [prompt,setPrompt] = useState('');
-    const [documentSearch,setDocumentSearch] = useState(true);
+    // const [documentSearch,setDocumentSearch] = useState(true);
     const messageViewportRef = useRef(null);
     const [showMenu,setShowMenu] = useState(false);
     const [selectedFile,setSelectedFile] = useState(null);
@@ -24,8 +24,11 @@ const Main = ({currentChatId,setCurrentChatId,loadChats,messages,setMessages
     useEffect(() => {
     scrollMessagesToBottom("auto");
 }, [messages]);
+
     
-    const isSendDisabled = knowledgeScope !== 'chat';
+    const isSendDisabled = knowledgeScope === 'user'||
+                           knowledgeScope === 'company';
+    const documentSearch = knowledgeScope !== 'nofile';
 
     function handleUploadClick() {
 
@@ -364,6 +367,9 @@ function scrollMessagesToBottom(behavior = "smooth") {
 
                                 <option value="company">
                                     Company Knowledge
+                                </option>
+                                <option value="nofile">
+                                    No file
                                 </option>
 
                             </select>
