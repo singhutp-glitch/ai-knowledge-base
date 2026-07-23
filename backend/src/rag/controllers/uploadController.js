@@ -1,7 +1,5 @@
 import { parseDocument } from "../parsers/parserFactory.js";
 import { chunkDocument } from "../chunking/chunckDocument.js";
-import { saveDocument } from "../services/documentService.js";
-import { saveChunk } from "../services/chunkService.js";
 import { saveDocumentandChunk } from "../services/ingestionService.js";
 import { generateEmbeddings } from "../embeddings/embeddingService.js";
 import { searchChatIdwithUserId } from "../../services/databaseService.js";
