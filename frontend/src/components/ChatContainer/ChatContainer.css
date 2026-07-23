@@ -41,3 +41,16 @@
   width: 32px;
   height: 32px;
 }
+
+.message.system {
+  justify-content: flex-start;
+}
+
+.message.system .message-content {
+  background: #f3f3f3;
+  padding: 20px 28px;
+  border-radius: 18px;
+  width: 50%;
+  line-height: 1.7;
+  white-space: pre-wrap;
+}

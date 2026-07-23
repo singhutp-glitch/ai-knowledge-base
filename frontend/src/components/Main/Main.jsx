@@ -13,7 +13,6 @@ import Greet from '../Greet/Greet.jsx'
 const Main = ({currentChatId,setCurrentChatId,loadChats,messages,setMessages
     ,user,setSourceBar, setSourceBarSources,documentSourceCache, setDocumentSourceCache}) => {
     const [prompt,setPrompt] = useState('');
-    // const [documentSearch,setDocumentSearch] = useState(true);
     const messageViewportRef = useRef(null);
     const [showMenu,setShowMenu] = useState(false);
     const [selectedFile,setSelectedFile] = useState(null);
@@ -40,6 +39,16 @@ const Main = ({currentChatId,setCurrentChatId,loadChats,messages,setMessages
     async function handleUpload() {
 
     if (!selectedFile) return;
+
+    const fileName = selectedFile.name;
+     setMessages(prev => [
+        ...prev,
+        {
+            role: "system",
+            content: `Uploading ${fileName}...\n\nPlease wait , it may take a few moments`,
+        }]);
+        
+
             let chatId = currentChatId;
         if (chatId === null) {
 
@@ -57,6 +66,24 @@ const Main = ({currentChatId,setCurrentChatId,loadChats,messages,setMessages
         setSelectedFile(null);
         fileInputRef.current.value = "";
         setIsUploading(false);
+          setMessages(prev => {
+
+                    const updated = [...prev];
+
+                    updated[
+                        updated.length - 1
+                    ] = {
+                        ...updated[
+                            updated.length - 1
+                        ],
+                        content: ` ${fileName}\nFile upload complete.`,
+                        loading: false,
+                    };
+
+                    scrollMessagesToBottom("smooth");
+                    return updated;
+                });
+        
 
     } catch (err) {
 
