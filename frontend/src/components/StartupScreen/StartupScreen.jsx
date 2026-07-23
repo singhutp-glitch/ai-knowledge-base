@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import './StartupScreen.css'
 
 const StartupScreen = () => {
   const [secondsLeft, setSecondsLeft] = useState(60);
@@ -19,16 +20,35 @@ const StartupScreen = () => {
     }, []);
 
     return (
-        <div className="startup-screen">
-            <h2>Starting server...</h2>
+      <div className="startup-screen">
+    <div className="startup-card">
 
-            <p>
-                The free backend is waking up.
-                This usually takes up to one minute.
-            </p>
-
-            <h3>{secondsLeft}s</h3>
+        <div className="startup-logo">
+            AI
         </div>
+
+        <h1>AI Knowledge Base</h1>
+
+        <p className="startup-subtitle">
+            Business Document Intelligence
+        </p>
+
+        <div className="startup-spinner"></div>
+
+        <h2>Starting the AI service...</h2>
+
+        <p className="startup-description">
+            The application is hosted on the free tier of Render.
+            The backend automatically goes to sleep after inactivity and
+            usually wakes within one minute.
+        </p>
+
+        <div className="startup-timer">
+            {secondsLeft}s
+        </div>
+
+    </div>
+</div>
     );
 }
 
