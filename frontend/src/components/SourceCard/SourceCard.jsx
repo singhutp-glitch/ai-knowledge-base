@@ -4,6 +4,10 @@ import "./SourceCard.css";
 const SourceCard = ({ source, citationNumber }) => {
     const [showFullChunk,setShowFullChunk] = useState(false);
 
+    function handleViewDocument(){
+        console.log('w')
+    }
+
     return (
         <div className="source-card">
 
@@ -29,7 +33,7 @@ const SourceCard = ({ source, citationNumber }) => {
             <div className="source-metadata">
 
                 Page {source.startPage}
-                {source.startPage!==source.endPage && `-${source.endPage}`}
+                {source.startPage!==source.endPage && ` - ${source.endPage}`}
 
             </div>
 
@@ -44,7 +48,7 @@ const SourceCard = ({ source, citationNumber }) => {
             </div>
 
 
-            <button className="source-action">
+            <button onClick={handleViewDocument} className="source-action">
 
                 View document →
 
@@ -54,6 +58,8 @@ const SourceCard = ({ source, citationNumber }) => {
         </div>
     );
 };
+
+
 
 
 export default SourceCard;
