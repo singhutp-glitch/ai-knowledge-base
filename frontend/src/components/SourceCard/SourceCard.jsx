@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import "./SourceCard.css";
 
-const SourceCard = ({ source, citationNumber }) => {
+const SourceCard = ({ source, citationNumber,setSelectedDocument,setViewerOpen }) => {
     const [showFullChunk,setShowFullChunk] = useState(false);
 
-    function handleViewDocument(){
-        console.log('w')
-    }
+  function handleViewDocument(document) {
+    setSelectedDocument(document);
+    setViewerOpen(true);
+}
+
 
     return (
         <div className="source-card">

@@ -4,6 +4,7 @@ import SideBar from "../SideBar/SideBar"
 import Main from "../Main/Main"
 import NavBar from "../NavBar/NavBar";
 import SourceBar from "../SourceBar/SourceBar.jsx";
+import DocumentViewer from "../DocumentViewer/DcoumentViewer.jsx"
 import { getChats } from "../../services/api.js";
 
 const ChatPage = ({user,onLogout}) => {
@@ -14,6 +15,12 @@ const ChatPage = ({user,onLogout}) => {
   const [sourceBarSources,setSourceBarSources] = useState(null);
   const [documentSourceCache, setDocumentSourceCache] = useState({});
   const [sourceBarWidth, setSourceBarWidth] = useState(25 * 16);
+
+  const [viewerOpen, setViewerOpen] = useState(false);
+  const [selectedDocument, setSelectedDocument] = useState(null);
+  const [documentViewerWidth, setDocumentViewerWidth] = useState(25 * 16);
+
+
 
   async function loadChats(){
     const userChats = await getChats();
@@ -27,7 +34,7 @@ const ChatPage = ({user,onLogout}) => {
 
 function handleSourceResize(e) {
 
-    const newWidth = window.innerWidth - e.clientX;
+    const newWidth = window.innerWidth - e.clientX - (viewerOpen? documentViewerWidth:0);
 
     if(newWidth > 300 && newWidth < 700){
         setSourceBarWidth(newWidth);
@@ -63,6 +70,48 @@ function stopResize(){
     );
 
 }
+// for document viewer
+
+function handleDocumentResize(e) {
+
+    const newWidth = window.innerWidth - e.clientX;
+
+    if(newWidth > 300 && newWidth < 700){
+        setDocumentViewerWidth(newWidth);
+    }
+
+}
+
+function startDocumentResize(){
+
+    document.addEventListener(
+        "mousemove",
+        handleDocumentResize
+    );
+
+    document.addEventListener(
+        "mouseup",
+        stopDocumentResize
+    );
+
+}
+
+
+function stopDocumentResize(){
+
+    document.removeEventListener(
+        "mousemove",
+        handleDocumentResize
+    );
+
+    document.removeEventListener(
+        "mouseup",
+        stopDocumentResize
+    );
+
+}
+
+
 
   return (
     <>
@@ -88,7 +137,18 @@ function stopResize(){
     </div>
 
    {sourceBar && (<SourceBar startResize={startResize} sourceBarWidth={sourceBarWidth}
-    sourceBarSources={sourceBarSources} setSourceBar={setSourceBar} />)}
+    sourceBarSources={sourceBarSources} setSourceBar={setSourceBar} 
+    setViewerOpen={setViewerOpen} setSelectedDocument={setSelectedDocument}/>)}
+  
+    {viewerOpen && (
+    <DocumentViewer
+        document={selectedDocument}
+        onClose={() => setViewerOpen(false)}
+        setViewerOpen={setViewerOpen}
+        startDocumentResize={startDocumentResize}
+        documentViewerWidth={documentViewerWidth}
+    />
+)}
   </div>
 </div>
            </>

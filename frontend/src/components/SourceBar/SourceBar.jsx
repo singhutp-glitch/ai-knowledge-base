@@ -3,7 +3,7 @@ import './SourceBar.css'
 import SourceCard from "../SourceCard/SourceCard"
 
 const SourceBar = ({startResize,sourceBarWidth,sourceBarSources,setSourceBar,
-    
+    setViewerOpen,setSelectedDocument    
 }) => {
 
   return (
@@ -49,6 +49,8 @@ const SourceBar = ({startResize,sourceBarWidth,sourceBarSources,setSourceBar,
             key={source.id ?? index}
             source={source}
             citationNumber={source.citationNumber}
+            setViewerOpen={setViewerOpen}
+            setSelectedDocument = {setSelectedDocument}
         />
 
     ))}

@@ -81,7 +81,7 @@
 
     cursor: col-resize;
 
-    background: transparent;
+    background: hsl(0, 0%, 0%,0.1);
 
     flex-shrink: 0;
 
