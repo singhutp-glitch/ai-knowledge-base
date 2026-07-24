@@ -61,17 +61,29 @@ model Document {
 }
 
 model Chunk {
-  id         Int                    @id @default(autoincrement())
-  documentId Int
-  chunkIndex Int
-  text       String
-  createdAt  DateTime               @default(now())
-  embedding  Unsupported("vector")?
-  document   Document               @relation(fields: [documentId], references: [id], onDelete: Cascade)
-  citations Citation[]
+  id           Int                    @id @default(autoincrement())
+  documentId   Int
+  chunkIndex   Int
+
+  text         String
+
+  startOffset  Int
+  endOffset    Int
+
+  startPage    Int?
+  endPage      Int?
+
+  createdAt    DateTime               @default(now())
+
+  embedding    Unsupported("vector")?
+
+  document     Document               @relation(fields: [documentId], references: [id], onDelete: Cascade)
+  citations    Citation[]
 
   @@unique([documentId, chunkIndex])
+
   @@index([documentId])
+  @@index([documentId, startPage])
 }
 
 model Citation {
