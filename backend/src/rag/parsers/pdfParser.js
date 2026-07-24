@@ -1,42 +1,59 @@
 import * as pdfjsLib from 'pdfjs-dist/legacy/build/pdf.mjs';
 
-
 export async function parsePdf(file) {
-   
     const data = new Uint8Array(file.buffer);
-    const loadingTask = pdfjsLib.getDocument({ data });
-    const pdf = await loadingTask.promise;
-    const pages =[];
+
     try {
-         for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
-        const page = await pdf.getPage(pageNum);
+        const pdf = await pdfjsLib.getDocument({ data }).promise;
 
-        // Extract text items from this page
-        const textContent = await page.getTextContent();
+        const pages = [];
+        let fullText = "";
 
-        // Join all text items into one string
-        const pageText = textContent.items
-            .map(item => item.str)
-            .join(' ')
-            .replace(/\s+/g, ' ')
-            .trim();
+        for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
+            const page = await pdf.getPage(pageNum);
 
-        pages.push({
-            pageNumber: pageNum,
-            text: pageText
-        });
-    }
+            const textContent = await page.getTextContent();
 
-    return {
-        pageCount: pdf.numPages,
-        pages,
-         metaData:{
-                fileName:file.originalname,
-                fileType: file.mimetype,
-                uploadedAt: new Date()
-        }}
+            const pageText = textContent.items
+                .map((item) => item.str)
+                .join(" ")
+                .replace(/\s+/g, " ")
+                .trim();
 
-    }catch(error){
-        console.error(error);
+            // Offset where this page begins inside fullText
+            const startOffset = fullText.length;
+
+            // Append page text to the continuous document
+            fullText += pageText;
+
+            // Offset where this page ends
+            const endOffset = fullText.length - 1;
+
+            pages.push({
+                pageNumber: pageNum,
+                startOffset,
+                endOffset,
+                text: pageText,
+            });
+
+            // Add separator between pages (except after the last page)
+            if (pageNum < pdf.numPages) {
+                fullText += "\n\n";
+            }
+        }
+
+        return {
+            fullText,
+
+            metadata: {
+                fileName: file.originalname,
+                mimeType: file.mimetype,
+                pageCount: pdf.numPages,
+            },
+
+            pages,
+        };
+    } catch (error) {
+        throw new Error(`Failed to parse PDF: ${error.message}`);
     }
 }
