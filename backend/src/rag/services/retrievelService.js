@@ -6,7 +6,8 @@ export async function retrieveChunks(queryEmbedding,chatId) {
 
     return await prisma.$queryRaw`
                 SELECT C.id,C."documentId",C.text, C."chunkIndex",
-                 D."originalFileName",C.embedding <=> ${vectorString}::vector AS score
+                 D."originalFileName", C."startPage", C."endPage"
+                 ,C.embedding <=> ${vectorString}::vector AS score
                 FROM "Document" D 
                 JOIN "Chunk" C
                 ON D.id = C."documentId"

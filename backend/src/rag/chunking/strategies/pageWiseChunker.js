@@ -1,5 +1,5 @@
 
-export function chunkDocument(parsedDocument, chunkSize = 1000, overlap = 200) {
+export function pagedChunking(parsedDocument, chunkSize = 1000, overlap = 200) {
     const chunks = [];
 
     const { fullText, pages } = parsedDocument;

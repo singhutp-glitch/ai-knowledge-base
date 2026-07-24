@@ -103,6 +103,8 @@ export async function loadChunk(chunkId) {
             documentId: true,
             chunkIndex: true,
             text: true,
+            startPage:true,
+            endPage:true,
 
             document: {
                 select: {

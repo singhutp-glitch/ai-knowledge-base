@@ -19,7 +19,6 @@ const SourceCard = ({ source, citationNumber }) => {
 
             </div>
 
-
             <div className="source-document">
 
                 {source.originalFileName}
@@ -29,7 +28,8 @@ const SourceCard = ({ source, citationNumber }) => {
 
             <div className="source-metadata">
 
-                Chunk {source.chunkIndex}
+                Page {source.startPage}
+                {source.startPage!==source.endPage && `-${source.endPage}`}
 
             </div>
 

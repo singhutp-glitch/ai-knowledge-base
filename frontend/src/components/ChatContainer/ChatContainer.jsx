@@ -36,7 +36,7 @@ const ChatContainer = ({messages,setSourceBar,setSourceBarSources
       }));
       }
     }
-
+    console.log('sideSources - ',sideSources);
 
     setSourceBarSources(sideSources)
     setSourceBar(true);
