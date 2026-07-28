@@ -8,6 +8,6 @@ export async function saveChunk(db,chunks,document){
                 endOffset:chunk.endOffset,
                 startPage:chunk.startPage,
                 endPage:chunk.endPage
-            }))})
+            }))})                                                                                                                     
 };
 

@@ -40,7 +40,7 @@ export async function deleteDocument(path){
 
     const {error} = await supabase.storage
     .from(BUCKET_NAME)
-    .remove([paht]);
+    .remove([path]);
 
     if(error){
         throw(error)

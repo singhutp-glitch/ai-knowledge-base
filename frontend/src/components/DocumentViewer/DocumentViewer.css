@@ -103,7 +103,20 @@
 
     color: #6b7280;
 
-    font-size: 14px;
+    font-size: 1.25rem;
 
     line-height: 1.6;
+}
+
+.document-viewer-content h3 {
+    margin-bottom: 0.75rem;
+
+    font-size: 1rem;
+    color: #111827;
+}
+
+.document-viewer-content p {
+    max-width: 280px;
+
+    margin: 6px 0;
 }

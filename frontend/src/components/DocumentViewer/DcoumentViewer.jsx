@@ -34,9 +34,17 @@ const DocumentViewer = ({setViewerOpen,startDocumentResize,documentViewerWidth})
 
         <div className="document-viewer-content">
 
-            Document Viewer
+    <h3>Document Viewer</h3>
 
-        </div>
+    <p>
+        Open cited documents without leaving the conversation.
+    </p>
+
+    <p>
+        In-app document viewing is currently under development.
+    </p>
+
+</div>
 
     </aside>
      </>
