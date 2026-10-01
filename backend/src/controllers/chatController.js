@@ -55,7 +55,7 @@ const sendMessage = async (req,res) => {
 
         res.write(`${JSON.stringify({
                 type:'status',
-                status:"Generating..."
+                status:"Generating"
             })}\n`);
     
         const stream =

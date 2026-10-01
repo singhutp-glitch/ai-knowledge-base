@@ -9,5 +9,5 @@ const router = express.Router();
 router.post("/register", authValidator,authController.register);
 router.post("/login", loginValidator,authController.login);
 router.get('/me',authMiddleware,authController.sendUserInfo)
-
+router.post("/demo",authController.demoLogin);
 export default router;

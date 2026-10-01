@@ -115,7 +115,7 @@ const Main = ({currentChatId,setCurrentChatId,loadChats,messages,setMessages
             content: "",
             loading: true,
             citations:[],
-            status:'Thinking...',
+            status:'Thinking',
         },
     ]);
 
@@ -240,7 +240,7 @@ const Main = ({currentChatId,setCurrentChatId,loadChats,messages,setMessages
             content: "",
             documentSources:[],
             loading: true,
-            status:'Retrieving...',
+            status:'Retrieving',
         },
     ]);
 
@@ -431,10 +431,11 @@ function scrollMessagesToBottom(behavior = "smooth") {
     }}type="text" placeholder={
     searchMode
     ? "Search your knowledge..."
-    : "Ask your documents..."
+    : selectedFile? "Upload your file "
+    :"Ask your documents..."
 } value={prompt}/>
                     <button onClick={handleSend} disabled={isSendDisabled} 
-                    className='send-button'>
+                    className={'send-button '+ (selectedFile && 'file-selected')}>
                         <img  src={assets.send_icon} alt="" />
                     </button>
                 </div>

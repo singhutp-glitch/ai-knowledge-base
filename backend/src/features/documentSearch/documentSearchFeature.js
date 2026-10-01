@@ -11,7 +11,7 @@ const  documentSearchFeature = {
     async execute(context){
         context.stream.write(`${JSON.stringify({
                 type:'status',
-                status:"Searching..."
+                status:"Searching"
             })}\n`);
         const feature = {};
 

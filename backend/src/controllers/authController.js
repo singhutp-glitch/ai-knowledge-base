@@ -129,8 +129,24 @@ const sendUserInfo = async(req,res)=>{
 }
 
 
+export const demoLogin = async (req, res) => {
+  try {
+    const result = await demoService.createDemoSession();
+
+    return res.status(200).json(result);
+  } catch (error) {
+    console.error("Demo login error:", error);
+
+    return res.status(500).json({
+      message: "Unable to start demo"
+    });
+  }
+};
+
+
 export default{
     register,
     login,
-    sendUserInfo
+    sendUserInfo,
+    demoLogin
 }

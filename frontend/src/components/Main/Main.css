@@ -233,16 +233,30 @@ label.document-search-box{
 }
 
 .send-button {
-    background: none;
-    border: none;
+    width: 40px;
+    height: 40px;
     padding: 0;
+    border: none;
+    border-radius: 50%;
+    background: transparent;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
     cursor: pointer;
+    transition: all 0.2s ease;
 }
 
 .send-button:disabled {
     opacity: 0.4;
     cursor: not-allowed;
 }
+.send-button.file-selected {
+  box-shadow: 0 0 0 3px hsl(224, 76%, 48%,0.7);
+  background: hsl(214, 100%, 95%);
+}
+
 
 .search-scope-message{
      display: inline-flex;
@@ -273,3 +287,5 @@ label.document-search-box{
 
     color: #2563eb;
 }
+
+

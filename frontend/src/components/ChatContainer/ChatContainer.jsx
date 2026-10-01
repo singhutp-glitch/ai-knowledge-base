@@ -62,7 +62,14 @@ const ChatContainer = ({messages,setSourceBar,setSourceBarSources
 
   {
   message.loading
-    ? message.status
+    ? (<span className="message-status">
+  {message.status}
+  <span className="loading-dots" aria-hidden="true">
+    <span>.</span>
+    <span>.</span>
+    <span>.</span>
+  </span>
+</span>)
     : (
   
    

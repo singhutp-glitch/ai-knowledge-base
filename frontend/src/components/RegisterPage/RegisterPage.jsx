@@ -90,6 +90,9 @@ return ( <div className="auth-page">
             <button type="submit">
                 Create Account
             </button>
+            <button type="button" >
+                Use Demo instead
+            </button>
 
         </form>
 
@@ -104,6 +107,7 @@ return ( <div className="auth-page">
             >
                 Sign In
             </button>
+            
 
         </div>
 

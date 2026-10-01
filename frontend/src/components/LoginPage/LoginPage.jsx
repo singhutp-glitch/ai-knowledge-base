@@ -80,6 +80,9 @@ return ( <div className="auth-page">
             <button type="submit">
                 Sign In
             </button>
+            <button type="button" >
+                Use Demo instead
+            </button>
 
         </form>
 
