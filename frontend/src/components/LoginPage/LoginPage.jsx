@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import './LoginPage.css'
-import { loginUser } from '../../services/authApi';
+import { loginUser, loginDemo } from '../../services/authApi';
+import { setDemoAuth } from '../../auth/authSession';
 
 const LoginPage = ({setUser,setAuthMode}) => {
 
@@ -48,18 +49,10 @@ const handleDemoLogin = async () => {
     setLoading(true);
     setError("");
 
-    const response = await axios.post(
-      `${API_URL}/auth/demo`
-    );
+    const { token, user } = loginDemo();
+    setDemoAuth(token);
 
-    const { token, user } = response.data;
-
-    loginAsDemo({
-      token,
-      user
-    });
-
-    navigate("/app");
+    setUser(user);
   } catch (error) {
     console.error(error);
 

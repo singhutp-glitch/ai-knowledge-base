@@ -91,7 +91,7 @@ const login = async (req,res) => {
             user:{
                 name:user.name,
                 email,
-                password,
+                isDemo:false
             }
         });
     }catch(error){
@@ -117,7 +117,7 @@ const sendUserInfo = async(req,res)=>{
         res.json({
             id:user.id,
             name:user.name,
-            email:user.email
+            email:user.email,
         })
 
     }catch(error){

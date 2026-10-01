@@ -1,4 +1,5 @@
 import api from "./axiosApi";   // your existing axios instance
+import { getAuthToken } from "../auth/authSession";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
@@ -19,7 +20,7 @@ export async function uploadDocument(file,chatId) {
 
 export async function sendRetrievalQuery(currentChatId,userQuery){
      
-    const token = localStorage.getItem('token');
+    const token = getAuthToken();
     const response = await fetch(
         `${API_BASE_URL}/rag/chats/${currentChatId}/chunks`,
         {

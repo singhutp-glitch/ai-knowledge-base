@@ -6,10 +6,13 @@ import LoginPage from "./components/LoginPage/LoginPage";
 import { getUser } from "./services/authApi";
 import StartupScreen from './components/StartupScreen/StartupScreen'
 import { waitForBackend } from "./services/backendInitialize.js";
+import { clearDemoAuth,isDemoMode } from "./auth/authSession.js";
+
 const ENABLE_STARTUP_SCREEN = import.meta.env.ENABLE_STARTUP_SCREEN === 'true';
 
 function App() {
   const [user, setUser] = useState(null);
+  const [token,setToken] = useState(null);
   const [authMode, setAuthMode] = useState("login");
   const [backendReady, setBackendReady] = useState(false);
 
@@ -43,8 +46,12 @@ function App() {
 
 
 function onLogout(){
-  localStorage.removeItem('token');
-  setUser(null)
+  if(isDemoMode()){
+    clearDemoAuth();
+  }else{
+    localStorage.removeItem('token');
+  }
+  setUser(null);
 }
 
     if (!backendReady) {

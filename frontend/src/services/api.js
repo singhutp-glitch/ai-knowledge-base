@@ -1,7 +1,9 @@
+import { getAuthToken } from "../auth/authSession";
+
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 export async function sendMessage(message)
 {
-    const token = localStorage.getItem('token');
+    const token = getAuthToken();
     const response = await fetch(
         `${API_BASE_URL}/chats`,
         {
@@ -28,7 +30,7 @@ export async function streamMessage(
 ) {
     console.log("document search:",documentSearch);
     
-    const token = localStorage.getItem('token');
+    const token = getAuthToken();
     const response = await fetch(
         `${API_BASE_URL}/chats/${currentChatId}/messages`,
         {
@@ -103,7 +105,7 @@ export async function streamMessage(
 }
 
 export async function createNewChatId(prompt){
-    const token = localStorage.getItem('token');
+    const token = getAuthToken();
     const response = await fetch(
         `${API_BASE_URL}/chats/`,
         {
@@ -123,7 +125,7 @@ export async function createNewChatId(prompt){
 }
 
 export async function getChats(){
-    const token = localStorage.getItem('token');
+    const token = getAuthToken();
     const response = await fetch(
         `${API_BASE_URL}/chats`,
         {
@@ -140,7 +142,7 @@ export async function getChats(){
 }
 
 export async function getMessages(chatId){
-    const token = localStorage.getItem('token');
+    const token = getAuthToken();
     const response = await fetch(
         `${API_BASE_URL}/chats/${chatId}/messages`,
         {
@@ -157,7 +159,7 @@ export async function getMessages(chatId){
 
 
 export async function getChunk(chunkId){
-    const token = localStorage.getItem('token');
+    const token = getAuthToken();
     const response = await fetch(
         `${API_BASE_URL}/documents/chunks/${chunkId}`,
         {

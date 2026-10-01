@@ -52,7 +52,7 @@ export const createDemoSession = async () => {
   return {
     token,
     user: {
-      id: demoUser.id,
+      name:'Demo User',
       email: demoUser.email,
       isDemo: true
     }
