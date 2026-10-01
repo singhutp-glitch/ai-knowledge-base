@@ -1,7 +1,7 @@
 import crypto from "crypto";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import prisma from "../config/prisma.js";
+import {prisma} from "../../lib/prisma.js";
 
 export const createDemoSession = async () => {
 //   const templateUser = await prisma.user.findFirst({
@@ -31,8 +31,9 @@ export const createDemoSession = async () => {
 
   const demoUser = await prisma.user.create({
     data: {
+      name:'Demo User',
       email: randomEmail,
-      password: hashedPassword,
+      passwordHash: hashedPassword,
       isDemo: true,
       demoExpiresAt: expiresAt
     }
@@ -48,7 +49,7 @@ export const createDemoSession = async () => {
       expiresIn: "2h"
     }
   );
-
+  console.log("demo created sucessfully");
   return {
     token,
     user: {
@@ -58,3 +59,7 @@ export const createDemoSession = async () => {
     }
   };
 };
+
+export default{ 
+  createDemoSession
+}

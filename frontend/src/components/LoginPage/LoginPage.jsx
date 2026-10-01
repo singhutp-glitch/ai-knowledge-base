@@ -49,7 +49,7 @@ const handleDemoLogin = async () => {
     setLoading(true);
     setError("");
 
-    const { token, user } = loginDemo();
+    const { token, user } = await loginDemo();
     setDemoAuth(token);
 
     setUser(user);
@@ -110,7 +110,7 @@ return ( <div className="auth-page">
                 Sign In
             </button>
             {loading && <div className='loading'>loading...</div>}
-            <button type="button" >
+            <button type="button" onClick={handleDemoLogin} >
                 Use Demo instead
             </button>
 

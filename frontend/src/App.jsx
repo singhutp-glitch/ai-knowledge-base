@@ -12,7 +12,6 @@ const ENABLE_STARTUP_SCREEN = import.meta.env.ENABLE_STARTUP_SCREEN === 'true';
 
 function App() {
   const [user, setUser] = useState(null);
-  const [token,setToken] = useState(null);
   const [authMode, setAuthMode] = useState("login");
   const [backendReady, setBackendReady] = useState(false);
 

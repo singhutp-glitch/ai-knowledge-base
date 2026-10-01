@@ -29,7 +29,7 @@ export async function streamMessage(
     onError
 ) {
     console.log("document search:",documentSearch);
-    
+    console.log("current chat id - ",currentChatId);
     const token = getAuthToken();
     const response = await fetch(
         `${API_BASE_URL}/chats/${currentChatId}/messages`,

@@ -2,6 +2,7 @@ import { validationResult } from "express-validator";
 import {prisma} from '../../lib/prisma.js'
 import bcrypt from 'bcrypt'
 import jwt from "jsonwebtoken";
+import demoService from '../services/demoService.js'
 
 const register = async (req,res) => {
     const error = validationResult(req);
