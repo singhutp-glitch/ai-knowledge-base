@@ -8,6 +8,7 @@ const [name, setName] = useState("");
 const [email, setEmail] = useState("");
 const [password, setPassword] = useState("");
 const [error, setError] = useState("");
+const [loading,setLoading] = useState(false);
 
 async function handleSubmit(e) {
 e.preventDefault();
@@ -29,7 +30,7 @@ if (password.length < 6) {
   return;
 }
 
-
+setLoading(true);
 const data = await registerUser(name,email,password);
 
 setAuthMode('login');
@@ -90,6 +91,7 @@ return ( <div className="auth-page">
             <button type="submit">
                 Create Account
             </button>
+            {loading && <div className='loading'>loading...</div>}
             <button type="button" >
                 Use Demo instead
             </button>

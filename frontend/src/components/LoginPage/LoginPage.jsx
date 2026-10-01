@@ -7,6 +7,7 @@ const LoginPage = ({setUser,setAuthMode}) => {
 const [email, setEmail] = useState("");
 const [password, setPassword] = useState("");
 const [error, setError] = useState("");
+const [loading,setLoading] = useState(false);
 
 async function handleSubmit(e) {
   try{
@@ -25,16 +26,51 @@ async function handleSubmit(e) {
     return;
     }
 
+    setLoading(true);
 
   const result = await loginUser(email,password);
   
   localStorage.setItem('token',result.token);
   setUser(result.user);
+  setLoading(false);
+  if(result.error){
+    setError(result.error);
+  }
   
 }catch(error){
   console.error(error);
+  setLoading(false);
 }
 }
+
+const handleDemoLogin = async () => {
+  try {
+    setLoading(true);
+    setError("");
+
+    const response = await axios.post(
+      `${API_URL}/auth/demo`
+    );
+
+    const { token, user } = response.data;
+
+    loginAsDemo({
+      token,
+      user
+    });
+
+    navigate("/app");
+  } catch (error) {
+    console.error(error);
+
+    setError(
+      "Unable to start the demo. Please try again."
+    );
+  } finally {
+    setLoading(false);
+  }
+};
+
 
 return ( <div className="auth-page">
 
@@ -80,6 +116,7 @@ return ( <div className="auth-page">
             <button type="submit">
                 Sign In
             </button>
+            {loading && <div className='loading'>loading...</div>}
             <button type="button" >
                 Use Demo instead
             </button>
