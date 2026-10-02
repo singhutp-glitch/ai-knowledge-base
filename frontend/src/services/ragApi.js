@@ -8,12 +8,12 @@ export async function uploadDocument(file,chatId) {
     const formData = new FormData();
 
     formData.append("document", file);
-
+    console.log("document sent")
     const response = await api.post(
         `/rag/chats/${chatId}/documents`,
         formData
     );
-
+    console.log('upload response - ',response.data);
     return response.data;
 }
 

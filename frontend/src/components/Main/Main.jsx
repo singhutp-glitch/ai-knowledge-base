@@ -77,7 +77,7 @@ const Main = ({currentChatId,setCurrentChatId,loadChats,messages,setMessages
         setIsUploading(true);
 
         const uploadResponse = await uploadDocument(selectedFile,chatId);
-
+        console.log("upload response recieved");
         setSelectedFile(null);
         fileInputRef.current.value = "";
         setIsUploading(false);
@@ -103,6 +103,26 @@ const Main = ({currentChatId,setCurrentChatId,loadChats,messages,setMessages
     } catch (err) {
 
         console.error(err);
+        setSelectedFile(null);
+        fileInputRef.current.value = "";
+        setIsUploading(false);
+          setMessages(prev => {
+
+                    const updated = [...prev];
+
+                    updated[
+                        updated.length - 1
+                    ] = {
+                        ...updated[
+                            updated.length - 1
+                        ],
+                        content: ` ${fileName}\nFailed to ingest file. Please try again..`,
+                        loading: false,
+                    };
+
+                    scrollMessagesToBottom("smooth");
+                    return updated;
+                });
     }
 }
 
