@@ -7,6 +7,7 @@ import {uploadDocument} from '../services/storageService.js'
 import { createStoragePath } from "../services/storageService.js";
 import { deleteDocument } from "../services/storageService.js";
 
+
 export default async function postUploadDocument(req,res){
     if(!req.file){
         return res.status(400).json({
@@ -15,8 +16,15 @@ export default async function postUploadDocument(req,res){
     }
     let storagePath = null;
     let uploadSucceeded = false;
-
+    const sendStatus = (data) => {
+            res.write(JSON.stringify(data) + "\n");
+        };
     try{
+        res.setHeader("Content-Type", "application/x-ndjson");
+        res.setHeader("Cache-Control", "no-cache");
+        res.setHeader("Connection", "keep-alive");
+
+        
         const chatId = Number(req.params.chatId);
 
         const userChat = await searchChatIdwithUserId(req.user.userId,chatId);
@@ -25,14 +33,33 @@ export default async function postUploadDocument(req,res){
                 error:'Chat not found'
             })
         };
+        sendStatus({
+            type :"status",
+            status: "upload"
+        });
         storagePath = createStoragePath(req.user.userId,chatId,req.file);
         uploadSucceeded = await uploadDocument(req.file.buffer,storagePath,req.file.mimetype);
-
+        sendStatus({
+            type :"status",
+            status: "parse"
+        });
         const parsedDocument = await parseDocument(req.file);
+        sendStatus({
+            type :"status",
+            status: "chunk"
+        });
         const chunks = await chunkDocument(parsedDocument);
 
+        sendStatus({
+            type :"status",
+            status: "embed"
+        });
         const finalChunks = await generateEmbeddings(chunks);
 
+        sendStatus({
+            type :"status",
+            status: "save"
+        });
         const document = await saveDocumentandChunk({
             originalname: req.file.originalname,
             mimetype: req.file.mimetype,
@@ -42,10 +69,11 @@ export default async function postUploadDocument(req,res){
             storagePath,
         },chunks);
         
-
-            res.status(200).json({
-                message:'Upload successful'
-            })
+            sendStatus({
+            type :"completed",
+            message:"ingestion complete"
+        });
+        res.end();
         }catch(error){
             console.error(error);
             if(uploadSucceeded){
@@ -55,10 +83,18 @@ export default async function postUploadDocument(req,res){
                     console.error(error);
                 }
             }
-
+            if (!res.headersSent) {
             return res.status(500).json({
-            error:'Error in uploading file'
-        })          
+                message: error.message
+            });
+        }
+
+            sendStatus({
+            type :"error",
+            error:"ingestion failed"
+        });
+
+        res.end();     
         }
 
 };

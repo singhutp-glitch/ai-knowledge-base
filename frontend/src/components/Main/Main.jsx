@@ -14,6 +14,23 @@ const formatFileSize = (bytes) => {
     return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
 };
 
+const makeIngestionProgressStatus = (currentStep,fileName)=>{
+    console.log("ingestion message called");
+    const steps = ["upload","parse","chunk","embed","save"];
+    let statusContent = `Ingesting ${fileName}\n\n`;
+    let stepStatus = "✓";
+    for(let stepNumber = 0;stepNumber <5;stepNumber++){
+        if(currentStep === steps[stepNumber]){
+            stepStatus = "←";
+        }
+        statusContent += `${stepNumber+1}. ${steps[stepNumber]} ${stepStatus}\n`
+        if(currentStep === steps[stepNumber]){
+            stepStatus = "";
+        }
+    }
+    return statusContent;
+}
+
 const Main = ({currentChatId,setCurrentChatId,loadChats,messages,setMessages
     ,user,setSourceBar, setSourceBarSources,documentSourceCache, setDocumentSourceCache}) => {
     const [prompt,setPrompt] = useState('');
@@ -76,8 +93,57 @@ const Main = ({currentChatId,setCurrentChatId,loadChats,messages,setMessages
     try {
         setIsUploading(true);
 
-        const uploadResponse = await uploadDocument(selectedFile,chatId);
-        console.log("upload response recieved");
+        const uploadResponse = await uploadDocument(selectedFile,
+            chatId,
+            status => {
+                const content = makeIngestionProgressStatus(status,fileName);
+                setMessages(prev => {
+
+                    const updated = [...prev];
+
+                    updated[updated.length - 1] = {
+                        ...updated[updated.length - 1],
+                        content:content,
+                    };
+
+                    return updated;
+                });
+            
+            },
+            message =>{
+                const lastMessage = makeIngestionProgressStatus('complete',fileName)
+                const newMessage = `${lastMessage} File Ingestion Completed` ;
+                setMessages(prev => {
+
+                    const updated = [...prev];
+
+                    updated[updated.length - 1] = {
+                        ...updated[updated.length - 1],
+                        content:newMessage,
+                    };
+
+                    return updated;
+                });
+            },
+            error=> {
+                // accumulated += error;
+                // setMessages(prev => {
+
+                //     const updated = [...prev];
+
+                //     updated[updated.length - 1] = {
+                //         ...updated[updated.length - 1],
+                //         content:accumulated,
+                //         loading:false
+
+                //     };
+
+                //     return updated;
+                // });
+            
+            }
+        );
+        console.log("upload response recieved from main");
         setSelectedFile(null);
         fileInputRef.current.value = "";
         setIsUploading(false);
@@ -91,7 +157,6 @@ const Main = ({currentChatId,setCurrentChatId,loadChats,messages,setMessages
                         ...updated[
                             updated.length - 1
                         ],
-                        content: ` ${fileName}\nFile upload complete.`,
                         loading: false,
                     };
 
@@ -106,21 +171,17 @@ const Main = ({currentChatId,setCurrentChatId,loadChats,messages,setMessages
         setSelectedFile(null);
         fileInputRef.current.value = "";
         setIsUploading(false);
-          setMessages(prev => {
+        const lastMessage = messages[messages.length - 1].content
+        const newMessage = `${lastMessage} File Ingestion Failed` ;
+                setMessages(prev => {
 
                     const updated = [...prev];
 
-                    updated[
-                        updated.length - 1
-                    ] = {
-                        ...updated[
-                            updated.length - 1
-                        ],
-                        content: ` ${fileName}\nFailed to ingest file. Please try again..`,
-                        loading: false,
+                    updated[updated.length - 1] = {
+                        ...updated[updated.length - 1],
+                        content:newMessage,
                     };
 
-                    scrollMessagesToBottom("smooth");
                     return updated;
                 });
     }
