@@ -97,6 +97,11 @@ async function embedBatchWithRetry(texts, maxRetries = 6) {
                     exponentialDelay + jitter,
                     600000
                 );
+            if (delay>600000) {
+                throw new Error(
+                    `Delay of ${delay/1000}s exceeded upper limit.`
+                );
+            }
 
             console.warn(
                 `Embedding rate-limited. ` +
