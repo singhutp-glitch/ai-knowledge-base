@@ -97,7 +97,7 @@ const Main = ({currentChatId,setCurrentChatId,loadChats,messages,setMessages
             chatId,
             status => {
                 const stageStatus = makeIngestionProgressStatus(status,fileName);
-                const content = `${stageStatus} Please wait. It may about a minute`
+                const content = `${stageStatus} Large documents may take several minutes. Please keep this window open.`
                 setMessages(prev => {
 
                     const updated = [...prev];
@@ -408,7 +408,11 @@ function scrollMessagesToBottom(behavior = "smooth") {
 
   return <div className="main">
     {showFileHelp &&<p className="file-help">
-     PDF, DOCX or TXT · Maximum 25 MB 
+    PDF, DOCX or TXT · Maximum 25 MB
+    <br />
+Large documents may take several minutes to ingest.
+<br />
+For faster ingestion, try smaller documents.
 </p>}
 
     <div className="message-viewport"    ref={messageViewportRef}> 

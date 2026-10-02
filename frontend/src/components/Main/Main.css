@@ -290,13 +290,17 @@ label.document-search-box{
 
 .file-help {
     position: fixed;
-    font-size: 2rem;
-    top: 8%;
+    font-size: 1.4rem;
+    top: 70%;
     left: 50%;
     transform: translateX(-50%);
     z-index: 9999;
     border: 2px solid hsl(240, 100%, 83%);
     border-radius: 0.5rem;
-    padding: 0.2rem 1.5rem ;
+    padding: 0.2rem 1.25rem;
     background-color: hsl(214, 100%, 97%);
+
+    box-shadow:
+        0 0 8px hsl(240, 100%, 83%),
+        0 0 18px hsl(240, 100%, 88%);
 }

@@ -3,7 +3,7 @@ import { geminiEmbedding } from "./geminiEmbedding.js";
 export async function generateEmbeddings(chunks) {
     const batchSize = 50;
     const allEmbeddings = [];
-
+    console.log("number of chunks - ",chunks.length);
     for (let i = 0; i < chunks.length; i += batchSize) {
         const batch = chunks.slice(i, i + batchSize);
 
@@ -36,36 +36,37 @@ function sleep(ms) {
 }
 
 function isRateLimitError(error) {
+
     return (
-        error?.status === 429 ||
-        error?.code === 429 ||
-        error?.response?.status === 429 ||
-        error?.error?.code === 429 ||
-        error?.message?.includes("429") ||
-        error?.message?.includes("RESOURCE_EXHAUSTED")
-    );
+        error?.status === 429 );
 }
 
 function getRetryAfterMs(error) {
-    const retryAfter =
-        error?.response?.headers?.["retry-after"] ??
-        error?.headers?.["retry-after"];
+    try {
+        const parsed = JSON.parse(error.message);
 
-    if (!retryAfter) {
+        const retryInfo = parsed.error?.details?.find(
+            (detail) =>
+                detail["@type"] ===
+                "type.googleapis.com/google.rpc.RetryInfo"
+        );
+
+        if (!retryInfo?.retryDelay) {
+            return null;
+        }
+
+        const seconds = parseFloat(
+            retryInfo.retryDelay.replace("s", "")
+        );
+
+        return seconds * 1000; // milliseconds
+    } catch (err) {
+        console.error("Failed to extract retry delay:", err);
         return null;
     }
-
-    const seconds = Number(retryAfter);
-
-    if (!Number.isNaN(seconds)) {
-        return seconds * 1000;
-    }
-
-    return null;
 }
 
-
-async function embedBatchWithRetry(texts, maxRetries = 5) {
+async function embedBatchWithRetry(texts, maxRetries = 6) {
     for (let attempt = 0; attempt <= maxRetries; attempt++) {
         try {
             return await geminiEmbedding(texts);
@@ -85,16 +86,16 @@ async function embedBatchWithRetry(texts, maxRetries = 5) {
             const retryAfterMs = getRetryAfterMs(error);
 
             const exponentialDelay =
-                1000 * Math.pow(2, attempt);
+                1000 * Math.pow(2, attempt+4);
 
             const jitter =
-                Math.floor(Math.random() * 500);
+                Math.floor(Math.random() * 1000);
 
             const delay =
                 retryAfterMs ??
                 Math.min(
                     exponentialDelay + jitter,
-                    30000
+                    600000
                 );
 
             console.warn(
