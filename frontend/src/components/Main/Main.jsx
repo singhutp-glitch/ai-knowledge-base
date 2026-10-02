@@ -17,13 +17,13 @@ const formatFileSize = (bytes) => {
 const makeIngestionProgressStatus = (currentStep,fileName)=>{
     console.log("ingestion message called");
     const steps = ["upload","parse","chunk","embed","save"];
-    let statusContent = `Ingesting ${fileName}\n\n`;
+    let statusContent = `Ingesting ${fileName}\n`;
     let stepStatus = "✓";
     for(let stepNumber = 0;stepNumber <5;stepNumber++){
         if(currentStep === steps[stepNumber]){
             stepStatus = "←";
         }
-        statusContent += `${stepNumber+1}. ${steps[stepNumber]} ${stepStatus}\n`
+        statusContent += ` ${stepNumber+1}. ${steps[stepNumber]} ${stepStatus}\n`
         if(currentStep === steps[stepNumber]){
             stepStatus = "";
         }
@@ -96,7 +96,8 @@ const Main = ({currentChatId,setCurrentChatId,loadChats,messages,setMessages
         const uploadResponse = await uploadDocument(selectedFile,
             chatId,
             status => {
-                const content = makeIngestionProgressStatus(status,fileName);
+                const stageStatus = makeIngestionProgressStatus(status,fileName);
+                const content = `${stageStatus} Please wait. It may about a minute`
                 setMessages(prev => {
 
                     const updated = [...prev];
@@ -124,46 +125,27 @@ const Main = ({currentChatId,setCurrentChatId,loadChats,messages,setMessages
 
                     return updated;
                 });
+                scrollMessagesToBottom("smooth");
+                
             },
             error=> {
-                // accumulated += error;
-                // setMessages(prev => {
+                setMessages(prev => {
 
-                //     const updated = [...prev];
+                    const updated = [...prev];
 
-                //     updated[updated.length - 1] = {
-                //         ...updated[updated.length - 1],
-                //         content:accumulated,
-                //         loading:false
+                    updated[updated.length - 1] = {
+                        ...updated[updated.length - 1],
+                        content:`Failed to ingest ${fileName}.\nPlease try again.`,
+                    };
 
-                //     };
-
-                //     return updated;
-                // });
-            
+                    return updated;
+                });
             }
         );
         console.log("upload response recieved from main");
         setSelectedFile(null);
         fileInputRef.current.value = "";
         setIsUploading(false);
-          setMessages(prev => {
-
-                    const updated = [...prev];
-
-                    updated[
-                        updated.length - 1
-                    ] = {
-                        ...updated[
-                            updated.length - 1
-                        ],
-                        loading: false,
-                    };
-
-                    scrollMessagesToBottom("smooth");
-                    return updated;
-                });
-        
 
     } catch (err) {
 
@@ -171,15 +153,13 @@ const Main = ({currentChatId,setCurrentChatId,loadChats,messages,setMessages
         setSelectedFile(null);
         fileInputRef.current.value = "";
         setIsUploading(false);
-        const lastMessage = messages[messages.length - 1].content
-        const newMessage = `${lastMessage} File Ingestion Failed` ;
-                setMessages(prev => {
+       setMessages(prev => {
 
                     const updated = [...prev];
 
                     updated[updated.length - 1] = {
                         ...updated[updated.length - 1],
-                        content:newMessage,
+                        content:`Failed to ingest ${fileName}.\nPlease try again.`,
                     };
 
                     return updated;
