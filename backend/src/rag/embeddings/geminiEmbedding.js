@@ -6,6 +6,7 @@ const ai = new GoogleGenAI({
 });
 
 export async function geminiEmbedding(texts){
+    console.log('gemini embedding called')
     const response = await ai.models.embedContent({
         model:'gemini-embedding-2',
         contents:texts,

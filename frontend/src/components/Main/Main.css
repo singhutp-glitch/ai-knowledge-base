@@ -268,7 +268,7 @@ label.document-search-box{
 
     width: fit-content;
 
-    background: #eff6ff;
+    background: hsl(214, 100%, 97%);
     border: 1px solid #bfdbfe;
     border-radius: 0.6rem;
 
@@ -288,4 +288,15 @@ label.document-search-box{
     color: #2563eb;
 }
 
-
+.file-help {
+    position: fixed;
+    font-size: 2rem;
+    top: 8%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 9999;
+    border: 2px solid hsl(240, 100%, 83%);
+    border-radius: 0.5rem;
+    padding: 0.2rem 1.5rem ;
+    background-color: hsl(214, 100%, 97%);
+}

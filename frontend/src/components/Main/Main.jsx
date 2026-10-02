@@ -9,6 +9,10 @@ import { sendRetrievalQuery } from '../../services/ragApi.js'
 import ChatContainer from '../ChatContainer/ChatContainer.jsx'
 import Greet from '../Greet/Greet.jsx'
 
+const MAX_FILE_SIZE = 25 * 1024 * 1024; // 25 MB
+const formatFileSize = (bytes) => {
+    return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
+};
 
 const Main = ({currentChatId,setCurrentChatId,loadChats,messages,setMessages
     ,user,setSourceBar, setSourceBarSources,documentSourceCache, setDocumentSourceCache}) => {
@@ -20,12 +24,23 @@ const Main = ({currentChatId,setCurrentChatId,loadChats,messages,setMessages
     const [knowledgeScope,setKnowledgeScope] = useState("chat");
     const [searchMode,setSearchMode] = useState(false);
     const [isUploading,setIsUploading] = useState(false);
-    
+    const [error,setError] = useState('');
+    const [showFileHelp,setShowFileHelp] = useState(false);
 
     useEffect(() => {
     scrollMessagesToBottom("auto");
 }, [messages]);
+    useEffect(() => {
+    const handleFocus = () => {
+        setShowFileHelp(false);
+    };
 
+    window.addEventListener("focus", handleFocus);
+
+    return () => {
+        window.removeEventListener("focus", handleFocus);
+    };
+}, []);
     
     const isSendDisabled = knowledgeScope === 'user'||
                            knowledgeScope === 'company'||
@@ -33,7 +48,7 @@ const Main = ({currentChatId,setCurrentChatId,loadChats,messages,setMessages
     const documentSearch = knowledgeScope !== 'nofile';
 
     function handleUploadClick() {
-
+        setShowFileHelp(true);
         fileInputRef.current.click();
     };
     async function handleUpload() {
@@ -92,11 +107,24 @@ const Main = ({currentChatId,setCurrentChatId,loadChats,messages,setMessages
 }
 
     function handleFileChange(event) {
-
     const file = event.target.files[0];
 
     if (!file) return;
 
+    if (file.size > MAX_FILE_SIZE) {
+        setError(
+        `File is ${formatFileSize(file.size)}. Maximum allowed size is 25 MB.`
+    );
+
+        setSelectedFile(null);
+
+        // Allows the user to select the same file again later
+        event.target.value = "";
+
+        return;
+    }
+
+    setError("");
     setSelectedFile(file);
 
     setShowMenu(false);
@@ -318,6 +346,9 @@ function scrollMessagesToBottom(behavior = "smooth") {
 
 
   return <div className="main">
+    {showFileHelp &&<p className="file-help">
+     PDF, DOCX or TXT · Maximum 25 MB 
+</p>}
 
     <div className="message-viewport"    ref={messageViewportRef}> 
         <div className="main-container">
@@ -352,6 +383,12 @@ function scrollMessagesToBottom(behavior = "smooth") {
                     <div className='search-scope-message'>
                             No user files connected
                         </div>)}
+                 {error && (
+                        <p className="file-error">
+                            {error}
+                        </p>
+                    )}
+
                {
 
                     showMenu && (
@@ -418,7 +455,10 @@ function scrollMessagesToBottom(behavior = "smooth") {
                 <div className="search-box">
                     <div >
                        <img
-                            onClick={()=>setShowMenu(prev=>!prev)}
+                            onClick={()=>{
+                                setError("");    
+                                setShowMenu(prev=>!prev)
+                            }}
                             src={assets.plus_icon}
                             className="composer-plus"
                         />
@@ -441,7 +481,7 @@ function scrollMessagesToBottom(behavior = "smooth") {
                 </div>
             </div>
     </div>
-
+    
     <input
         type="file"
         ref={fileInputRef}
