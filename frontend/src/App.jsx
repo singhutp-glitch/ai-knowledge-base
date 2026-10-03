@@ -23,7 +23,7 @@ function App() {
             }
           
             await getUserInfo();
-            setBackendReady(true);
+            // setBackendReady(true);
         }
 
         initialize();

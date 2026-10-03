@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import './StartupScreen.css'
+import app_img from '../../assets/app_img.png';
 
 const StartupScreen = () => {
   const [secondsLeft, setSecondsLeft] = useState(60);
@@ -21,6 +22,9 @@ const StartupScreen = () => {
 
     return (
       <div className="startup-screen">
+        <div className="app-img">
+            <img src={app_img} alt="" height={450}/>
+        </div>
     <div className="startup-card">
 
         <div className="startup-logo">
