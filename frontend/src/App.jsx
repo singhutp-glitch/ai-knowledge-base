@@ -23,7 +23,7 @@ function App() {
             }
           
             await getUserInfo();
-            // setBackendReady(true);
+            setBackendReady(true);
         }
 
         initialize();
@@ -61,7 +61,7 @@ function onLogout(){
     <>
 
       {user?<ChatPage onLogout={onLogout}  user={user}/>:
-      authMode==='register'?<Register setAuthMode={setAuthMode} />:
+      authMode==='register'?<Register setUser={setUser} setAuthMode={setAuthMode} />:
       <LoginPage setUser={setUser} setAuthMode={setAuthMode}/>}    
     </>
   )

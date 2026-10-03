@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import './LoginPage.css'
 import { loginUser, loginDemo } from '../../services/authApi';
-import { setDemoAuth } from '../../auth/authSession';
+import { setDemoAuth, clearDemoAuth } from '../../auth/authSession';
 
 const LoginPage = ({setUser,setAuthMode}) => {
 
@@ -32,6 +32,7 @@ async function handleSubmit(e) {
   const result = await loginUser(email,password);
   
   localStorage.setItem('token',result.token);
+  
   setUser(result.user);
   setLoading(false);
   if(result.error){

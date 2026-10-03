@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { registerUser } from "../../services/authApi";
 import "./RegisterPage.css";
+import { loginDemo } from '../../services/authApi';
+import { setDemoAuth } from '../../auth/authSession';
 
 
-const RegisterPage = ({setAuthMode}) => {
+const RegisterPage = ({setUser,setAuthMode}) => {
 const [name, setName] = useState("");
 const [email, setEmail] = useState("");
 const [password, setPassword] = useState("");
@@ -36,6 +38,28 @@ const data = await registerUser(name,email,password);
 setAuthMode('login');
 
 }
+
+
+const handleDemoLogin = async () => {
+  try {
+    setLoading(true);
+    setError("");
+
+    const { token, user } = await loginDemo();
+    setDemoAuth(token);
+
+    setUser(user);
+  } catch (error) {
+    console.error(error);
+
+    setError(
+      "Unable to start the demo. Please try again."
+    );
+  } finally {
+    setLoading(false);
+  }
+};
+
 
 return ( <div className="auth-page">
 
@@ -92,7 +116,7 @@ return ( <div className="auth-page">
                 Create Account
             </button>
             {loading && <div className='loading'>loading...</div>}
-            <button type="button" >
+            <button type="button" onClick={handleDemoLogin} >
                 Use Demo instead
             </button>
 
