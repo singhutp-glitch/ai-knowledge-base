@@ -32,8 +32,8 @@
 
     text-align:center;
 
-    box-shadow:
-        0 12px 40px rgba(15,23,42,.08);
+    /* box-shadow:
+        0 12px 40px rgba(15,23,42,.08); */
 }
 
 .startup-logo{
@@ -144,11 +144,11 @@ div.app-img img {
     height: 100%;
     object-fit: contain;
     
-    border: 1px solid #dbe4f0;
+    border: 2px solid #dbe4f0;
     border-radius: 12px;
     background: #ffffff;
 
     box-shadow:
-        0 8px 24px rgba(0, 0, 0, 0.08),
+        0 8px 24px rgba(0, 0, 0, 0.2),
         0 0 18px rgba(99, 102, 241, 0.12);
 }
